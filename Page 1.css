@@ -1620,3 +1620,136 @@ body.dark .card {
     font-size: 0.9rem;
   }
 }
+/* Bannière cookie style modale newsletter mais en bas à droite */
+.cookie-banner {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #fff;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  z-index: 10000;
+  width: 300px;
+  font-family: sans-serif;
+  color: #333;
+  display: block; /* important pour qu’il soit visible */
+}
+
+.cookie-banner h3 {
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  color: #1e2a38;
+}
+
+.cookie-banner p {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.banner-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cookie-banner button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #003366;
+  color: white;
+  font-weight: bold;
+}
+.cookie-banner button:hover {
+  background-color: #0055aa;
+}
+
+/* Modal admin */
+.cookie-banner-modal {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+}
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 300px;
+  width: 90%;
+  text-align: center;
+}
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.error { color:red; font-size: 0.9rem; margin-top:5px; }
+/* Modal création compte */
+.cookie-banner-modal {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+}
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 300px;
+  width: 90%;
+  text-align: center;
+}
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.error { color:red; font-size: 0.9rem; margin-top:5px; }
+/* Bloque le scroll et interactions tant que cookie pas validé */
+body.cookie-blocked {
+  overflow: hidden;
+  pointer-events: none; /* empêche clic sur le site */
+}
+body.cookie-blocked #cookie-banner,
+body.cookie-blocked .cookie-banner-modal {
+  pointer-events: auto; /* permet interaction avec la bannière et modales */
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 100px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.topbar .topbar-ads {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0 20px;
+  overflow: hidden;
+}
+
+.topbar .topbar-ads img {
+  max-height: 80%; /* laisse un peu de marge pour le logo et texte */
+  border-radius: 6px;
+  object-fit: cover;
+  transition: opacity 0.5s ease;
+}

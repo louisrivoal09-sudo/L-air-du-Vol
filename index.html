@@ -13,11 +13,17 @@
 
   <!-- Barre du haut -->
   <header class="topbar">
-    <div class="logo-site">
       <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
+    <div class="logo-site">
       <img src="logo.png" alt="Logo" class="logo-img">
       <span class="site-name">L'Air du vol</span>
-    </div>
+    </div>  
+  <!-- Bandeau pub image unique -->
+  <div class="topbar-ads" id="topbar-ads">
+    <a id="topbar-ad-link" href="https://www.picard.fr/offre-le-snack.html" target="_blank">
+      <img id="topbar-ad-image" src="https://www.picard.fr/on/demandware.static/-/Sites-picard-Library/default/dw53e8a5b3/brandcontent/1464x270px_BANNIERE_HEADER_SNACK_MOBILE.jpg" alt="Pub">
+    </a>
+  </div>
     <button id="toggle-theme">🌙 Mode Sombre</button>
   </header>
 
@@ -588,30 +594,6 @@ searchInput.addEventListener('input', () => {
     }
   });
 </script>
-<script>
-  const pubContainer = document.querySelector('.pub-container');
-  const pubImage = pubContainer.querySelector('img');
-  let currentAd = 0;
-
-  // Fonction d’affichage
-  function showAd(index) {
-    pubImage.src = ads[index].img;
-  }
-
-  // Clic = ouvre le lien actuel
-  pubContainer.addEventListener('click', () => {
-    window.open(ads[currentAd].link, '_blank');
-  });
-
-  // Carrousel automatique toutes les 7s
-  setInterval(() => {
-    currentAd = (currentAd + 1) % ads.length;
-    showAd(currentAd);
-  }, 1000); // 7000 ms = 7 s
-
-  // Initialisation
-  showAd(currentAd);
-</script>
 <!-- Fenêtre Newsletter -->
 <div id="newsletter-modal">
   <div class="newsletter-content">
@@ -647,6 +629,178 @@ searchInput.addEventListener('input', () => {
   });
   
 
+</script>
+<!-- Bannière cookies en bas à droite -->
+<div id="cookie-banner" class="cookie-banner">
+  <h3>📢 Publicités</h3>
+  <p>Acceptez-vous les publicités sur ce site ?</p>
+  <div class="banner-buttons">
+    <button id="accept-cookies">Oui</button>
+    <button id="decline-cookies">Non</button>
+  </div>
+  <p style="font-size: 0.8rem; margin-top:5px;">Pour refuser les publicités, il faut avoir un compte L’Air du vol</p>
+  <button id="create-account-btn" style="margin-top:5px; padding:6px 12px; border:none; border-radius:6px; background:#003366; color:white; cursor:pointer;">Créer un compte</button>
+</div>
+
+<!-- Modal création compte -->
+<div id="create-account-modal" class="cookie-banner-modal">
+  <div class="modal-content">
+    <h3>Créer un compte</h3>
+    <input type="email" id="account-email" placeholder="Votre email" required>
+    <button id="submit-account-btn">Créer le compte</button>
+    <p id="account-msg" style="color:green; font-size:0.9rem;"></p>
+    <p id="account-error" class="error"></p>
+  </div>
+</div>
+
+<!-- Modal admin pour refuser -->
+<div id="admin-login-modal" class="cookie-banner-modal">
+  <div class="auth-content">
+    <h3>Authentification requise</h3>
+    <input type="text" id="admin-username" placeholder="Identifiant">
+    <input type="password" id="admin-password" placeholder="Mot de passe">
+    <button id="admin-login-btn">Se connecter</button>
+    <p id="admin-error" class="error"></p>
+  </div>
+</div>
+
+<script>
+const cookieBanner = document.getElementById('cookie-banner');
+const acceptBtn = document.getElementById('accept-cookies');
+const declineBtn = document.getElementById('decline-cookies');
+const adminModal = document.getElementById('admin-login-modal');
+const adminLoginBtn = document.getElementById('admin-login-btn');
+const adminError = document.getElementById('admin-error');
+
+window.addEventListener('load', () => {
+  // Affiche la bannière seulement si pas encore accepté/refusé
+  const saved = localStorage.getItem('cookiesAccepted');
+  if(!saved) {
+    cookieBanner.style.display = 'block';
+  }
+});
+
+acceptBtn.addEventListener('click', () => {
+  cookieBanner.style.display = 'none';
+  localStorage.setItem('cookiesAccepted', 'true');
+});
+
+declineBtn.addEventListener('click', () => {
+  adminModal.style.display = 'flex';
+});
+
+adminLoginBtn.addEventListener('click', () => {
+  const username = document.getElementById('admin-username').value;
+  const password = document.getElementById('admin-password').value;
+  if(username === 'admin' && password === '1234') {
+    cookieBanner.style.display = 'none';
+    adminModal.style.display = 'none';
+    localStorage.setItem('cookiesAccepted', 'false');
+  } else {
+    adminError.textContent = 'Identifiant ou mot de passe incorrect';
+  }
+});
+const createAccountBtn = document.getElementById('create-account-btn');
+const createAccountModal = document.getElementById('create-account-modal');
+const submitAccountBtn = document.getElementById('submit-account-btn');
+const accountEmail = document.getElementById('account-email');
+const accountMsg = document.getElementById('account-msg');
+const accountError = document.getElementById('account-error');
+
+createAccountBtn.addEventListener('click', () => {
+  createAccountModal.style.display = 'flex';
+});
+
+submitAccountBtn.addEventListener('click', () => {
+  const email = accountEmail.value.trim();
+  if(!email) {
+    accountError.textContent = "Veuillez entrer un email valide.";
+    return;
+  }
+  accountError.textContent = "";
+  accountMsg.textContent = "Compte créé ! Vous pourrez ensuite refuser les pubs avec les codes qui vous seront envoyés à cette adresse.";
+  // Ici tu peux sauvegarder l'email localement ou l’envoyer au serveur
+  localStorage.setItem('userEmail', email);
+  // Ferme le modal après 2s
+  setTimeout(() => createAccountModal.style.display = 'none', 2000);
+});
+// Au chargement, bloque le site si pas encore accepté/refusé
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('cookiesAccepted');
+  if(!saved) {
+    document.body.classList.add('cookie-blocked');
+    document.getElementById('cookie-banner').style.display = 'block';
+  }
+});
+
+// Quand l'utilisateur accepte les pubs
+document.getElementById('accept-cookies').addEventListener('click', () => {
+  document.body.classList.remove('cookie-blocked');
+  localStorage.setItem('cookiesAccepted', 'true');
+});
+
+// Quand l'utilisateur crée un compte pour pouvoir refuser
+document.getElementById('submit-account-btn').addEventListener('click', () => {
+  const email = document.getElementById('account-email').value.trim();
+  if(email) {
+    localStorage.setItem('userEmail', email);
+    document.body.classList.remove('cookie-blocked');
+    document.getElementById('create-account-modal').style.display = 'none';
+  }
+});
+
+// Ici, tu peux garder la logique pour refuser uniquement si compte existant/admin
+
+</script>
+<script>
+ const adImage = document.getElementById('topbar-ad-image');
+const adLink = document.getElementById('topbar-ad-link');
+
+const ads = [
+  { img: 'https://offloadmedia.feverup.com/parissecret.com/wp-content/uploads/2025/09/26160946/Banner_BASTILLE_OPENING_FR-1-1.gif', link: '' },
+  { img: 'https://www.universfreebox.com/wp-content/uploads/2020/02/disney.jpeg', link: '' },
+  { img: 'https://www.lundimatin.fr/wp-content/uploads/2023/03/a-propos-fedex.png', link: '' },
+  { img: 'https://www.vivelapub.fr/wp-content/uploads/miniatures/apple3.jpg', link: '' },
+  { img: 'https://static-pepper.dealabs.com/threads/raw/2UzqT/3062453_1/re/768x768/qt/60/3062453_1.jpg', link: '' }
+];
+
+let currentAd = 0;
+
+function showNextAd() {
+  // Fade out
+  adImage.style.opacity = 0;
+
+  setTimeout(() => {
+    // Change l'image et le lien
+    currentAd = (currentAd + 1) % ads.length;
+    adImage.src = ads[currentAd].img;
+    adLink.href = ads[currentAd].link;
+    // Fade in
+    adImage.style.opacity = 1;
+  }, 500); // correspond à la durée du fade-out
+}
+
+// Défilement toutes les 7 secondes
+setInterval(showNextAd, 7000);
+function disableAds() {
+  const topbarAds = document.getElementById('topbar-ads');
+  topbarAds.style.display = 'none'; // masque complètement l’espace
+}
+
+// Exemple : si tu stockes le choix dans localStorage
+const adsDisabled = localStorage.getItem('cookiesAccepted') === 'false';
+if (adsDisabled) {
+  disableAds();
+}
+
+// Ou après que l’utilisateur clique sur "Non" et qu’il a un compte
+document.getElementById('decline-cookies').addEventListener('click', () => {
+  // Vérifie si l’utilisateur est autorisé à refuser
+  const email = localStorage.getItem('userEmail');
+  if (email) { // compte créé
+    disableAds();
+  }
+});
 </script>
   </body>
 </html>
