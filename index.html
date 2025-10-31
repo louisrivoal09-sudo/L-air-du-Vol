@@ -10,7 +10,69 @@
   <link rel="icon" href="logo.png" type="image/png">
 </head>
 <body>
+<!-- Overlay de blocage total -->
+<div id="cookie-overlay" class="cookie-overlay">
+  <div class="cookie-modal-center">
+    <h2>🍪 Gestion des cookies et publicités</h2>
+    <p>Pour accéder au site L'Air du Vol, veuillez choisir une option :</p>
+    
+    <div class="cookie-options">
+      <button id="accept-ads-btn" class="cookie-btn accept">
+        ✅ Accepter les publicités
+        <small>Accès gratuit avec publicités</small>
+      </button>
+      
+      <button id="refuse-ads-btn" class="cookie-btn refuse">
+        ❌ Refuser les publicités
+        <small>Nécessite un compte gratuit</small>
+      </button>
+    </div>
+    
+    <p class="cookie-info">En continuant, vous acceptez nos <a href="#section1">conditions d'utilisation</a></p>
+  </div>
+</div>
 
+<!-- Modal création de compte -->
+<div id="account-modal" class="cookie-overlay" style="display:none;">
+  <div class="cookie-modal-center">
+    <span class="close-modal" id="close-account-modal">&times;</span>
+    <h2>Créer un compte gratuit</h2>
+    <p>Pour naviguer sans publicités, créez votre compte :</p>
+    
+    <form id="account-form">
+      <input type="text" id="account-username" placeholder="Nom d'utilisateur" required>
+      <input type="email" id="account-email" placeholder="Email" required>
+      <input type="password" id="account-password" placeholder="Mot de passe" required>
+      <button type="submit" class="cookie-btn accept">Créer mon compte</button>
+    </form>
+    
+    <p id="account-message" class="message"></p>
+    
+    <div class="login-section">
+      <p>Déjà un compte ? <button id="show-login-btn" class="link-btn">Se connecter</button></p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal connexion -->
+<div id="login-modal" class="cookie-overlay" style="display:none;">
+  <div class="cookie-modal-center">
+    <span class="close-modal" id="close-login-modal">&times;</span>
+    <h2>Connexion</h2>
+    
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Email" required>
+      <input type="password" id="login-password" placeholder="Mot de passe" required>
+      <button type="submit" class="cookie-btn accept">Se connecter</button>
+    </form>
+    
+    <p id="login-message" class="message"></p>
+    
+    <div class="signup-section">
+      <p>Pas de compte ? <button id="show-signup-btn" class="link-btn">Créer un compte</button></p>
+    </div>
+  </div>
+</div>
   <!-- Barre du haut -->
   <header class="topbar">
       <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
@@ -18,12 +80,6 @@
       <img src="logo.png" alt="Logo" class="logo-img">
       <span class="site-name">L'Air du vol</span>
     </div>  
-  <!-- Bandeau pub image unique -->
-  <div class="topbar-ads" id="topbar-ads">
-    <a id="topbar-ad-link" href="https://www.picard.fr/offre-le-snack.html" target="_blank">
-      <img id="topbar-ad-image" src="https://www.picard.fr/on/demandware.static/-/Sites-picard-Library/default/dw53e8a5b3/brandcontent/1464x270px_BANNIERE_HEADER_SNACK_MOBILE.jpg" alt="Pub">
-    </a>
-  </div>
     <button id="toggle-theme">🌙 Mode Sombre</button>
   </header>
 
@@ -73,6 +129,20 @@
       </li>
   <li><a href="Page 13.html">Catalogue</a></li>
     </ul>
+    <!-- Publicité sidebar -->
+<div class="sidebar-ad">
+  <p>PUBLICITÉ</p>
+  <a href="https://www.picard.fr" target="_blank">
+    <img src="https://www.picard.fr/on/demandware.static/-/Sites-picard-Library/default/dw53e8a5b3/brandcontent/1464x270px_BANNIERE_HEADER_SNACK_MOBILE.jpg" alt="Picard">
+  </a>
+</div>
+
+<div class="sidebar-ad">
+  <p>PUBLICITÉ</p>
+  <a href="https://www.apple.com" target="_blank">
+    <img src="https://www.vivelapub.fr/wp-content/uploads/miniatures/apple3.jpg" alt="Apple">
+  </a>
+</div>
   </nav>
 
   <!-- Contenu principal -->
@@ -283,6 +353,13 @@ Sa carrière illustre la transition des années 1930, où les compromis techniqu
           </div>
         </div>
       </div>
+      <!-- Publicité -->
+<div class="ad-card">
+  <img src="https://www.picard.fr/on/demandware.static/-/Sites-picard-Library/default/dw53e8a5b3/brandcontent/1464x270px_BANNIERE_HEADER_SNACK_MOBILE.jpg" alt="Pub Picard">
+  <h3>🍕 Découvrez les nouveaux snacks Picard</h3>
+  <p>Livraison gratuite dès 60€ d'achat</p>
+  <a href="https://www.picard.fr" target="_blank" class="btn">Découvrir</a>
+</div>
             <div class="card">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Cassutt-wasabi-N26ES-090221-wc.jpg?20090222000221" alt="Formule 1 Reno">
         <div class="card-content">
@@ -347,6 +424,12 @@ Sa carrière illustre la transition des années 1930, où les compromis techniqu
           </div>
         </div>
       </div>
+      <div class="ad-card">
+  <img src="https://www.vivelapub.fr/wp-content/uploads/miniatures/apple3.jpg" alt="Pub Apple">
+  <h3>📱 iPhone 16 Pro</h3>
+  <p>Le plus puissant des iPhone</p>
+  <a href="https://www.apple.com" target="_blank" class="btn">En savoir plus</a>
+</div>
             <div class="card">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Cassutt-wasabi-N26ES-090221-wc.jpg?20090222000221" alt="Formule 1 Reno">
         <div class="card-content">
@@ -363,6 +446,12 @@ Sa carrière illustre la transition des années 1930, où les compromis techniqu
           </div>
         </div>
       </div>
+      <div class="ad-card">
+  <img src="https://www.lundimatin.fr/wp-content/uploads/2023/03/a-propos-fedex.png" alt="Pub FedEx">
+  <h3>📦 FedEx Express</h3>
+  <p>Livraison internationale en 24h</p>
+  <a href="https://www.fedex.com" target="_blank" class="btn">Expédier</a>
+</div>
             <div class="card">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Cassutt-wasabi-N26ES-090221-wc.jpg?20090222000221" alt="Formule 1 Reno">
         <div class="card-content">
@@ -516,7 +605,12 @@ searchInput.addEventListener('input', () => {
   });
 });
 </script>
-
+<div class="floating-ad">
+  <button class="close-floating">&times;</button>
+  <a href="https://www.fedex.com" target="_blank">
+    <img src="https://www.lundimatin.fr/wp-content/uploads/2023/03/a-propos-fedex.png" alt="FedEx">
+  </a>
+</div>
   <footer class="footer">
     <div class="footer-content" id="section1">
       <h3>Conditions Générales d’Utilisation</h3>
@@ -630,177 +724,299 @@ searchInput.addEventListener('input', () => {
   
 
 </script>
-<!-- Bannière cookies en bas à droite -->
-<div id="cookie-banner" class="cookie-banner">
-  <h3>📢 Publicités</h3>
-  <p>Acceptez-vous les publicités sur ce site ?</p>
-  <div class="banner-buttons">
-    <button id="accept-cookies">Oui</button>
-    <button id="decline-cookies">Non</button>
-  </div>
-  <p style="font-size: 0.8rem; margin-top:5px;">Pour refuser les publicités, il faut avoir un compte L’Air du vol</p>
-  <button id="create-account-btn" style="margin-top:5px; padding:6px 12px; border:none; border-radius:6px; background:#003366; color:white; cursor:pointer;">Créer un compte</button>
-</div>
-
-<!-- Modal création compte -->
-<div id="create-account-modal" class="cookie-banner-modal">
-  <div class="modal-content">
-    <h3>Créer un compte</h3>
-    <input type="email" id="account-email" placeholder="Votre email" required>
-    <button id="submit-account-btn">Créer le compte</button>
-    <p id="account-msg" style="color:green; font-size:0.9rem;"></p>
-    <p id="account-error" class="error"></p>
-  </div>
-</div>
-
-<!-- Modal admin pour refuser -->
-<div id="admin-login-modal" class="cookie-banner-modal">
-  <div class="auth-content">
-    <h3>Authentification requise</h3>
-    <input type="text" id="admin-username" placeholder="Identifiant">
-    <input type="password" id="admin-password" placeholder="Mot de passe">
-    <button id="admin-login-btn">Se connecter</button>
-    <p id="admin-error" class="error"></p>
-  </div>
-</div>
-
 <script>
-const cookieBanner = document.getElementById('cookie-banner');
-const acceptBtn = document.getElementById('accept-cookies');
-const declineBtn = document.getElementById('decline-cookies');
-const adminModal = document.getElementById('admin-login-modal');
-const adminLoginBtn = document.getElementById('admin-login-btn');
-const adminError = document.getElementById('admin-error');
+// ============================================
+// SYSTÈME DE GESTION DES COOKIES ET PUBLICITÉS
+// ============================================
 
-window.addEventListener('load', () => {
-  // Affiche la bannière seulement si pas encore accepté/refusé
-  const saved = localStorage.getItem('cookiesAccepted');
-  if(!saved) {
-    cookieBanner.style.display = 'block';
+(function() {
+  'use strict';
+  
+  // Configuration
+  const CONFIG = {
+    STORAGE_KEYS: {
+      ADS_ACCEPTED: 'adsAccepted',
+      USER_DATA: 'userData',
+      LAST_INTERSTITIAL: 'lastInterstitial'
+    },
+    INTERSTITIAL_DELAY: 30000, // 30 secondes entre chaque pub interstitielle
+    AD_CLOSE_DELAY: 5 // 5 secondes avant de pouvoir fermer
+  };
+  
+  // Elements DOM
+  const elements = {
+    overlay: document.getElementById('cookie-overlay'),
+    accountModal: document.getElementById('account-modal'),
+    loginModal: document.getElementById('login-modal'),
+    acceptBtn: document.getElementById('accept-ads-btn'),
+    refuseBtn: document.getElementById('refuse-ads-btn'),
+    accountForm: document.getElementById('account-form'),
+    loginForm: document.getElementById('login-form'),
+    showLoginBtn: document.getElementById('show-login-btn'),
+    showSignupBtn: document.getElementById('show-signup-btn'),
+    closeAccountModal: document.getElementById('close-account-modal'),
+    closeLoginModal: document.getElementById('close-login-modal')
+  };
+  
+  // Base de données utilisateurs (localStorage)
+  class UserDatabase {
+    static getUsers() {
+      return JSON.parse(localStorage.getItem('users') || '[]');
+    }
+    
+    static saveUser(user) {
+      const users = this.getUsers();
+      users.push(user);
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+    
+    static findUser(email, password) {
+      const users = this.getUsers();
+      return users.find(u => u.email === email && u.password === password);
+    }
+    
+    static userExists(email) {
+      const users = this.getUsers();
+      return users.some(u => u.email === email);
+    }
   }
-});
-
-acceptBtn.addEventListener('click', () => {
-  cookieBanner.style.display = 'none';
-  localStorage.setItem('cookiesAccepted', 'true');
-});
-
-declineBtn.addEventListener('click', () => {
-  adminModal.style.display = 'flex';
-});
-
-adminLoginBtn.addEventListener('click', () => {
-  const username = document.getElementById('admin-username').value;
-  const password = document.getElementById('admin-password').value;
-  if(username === 'admin' && password === '1234') {
-    cookieBanner.style.display = 'none';
-    adminModal.style.display = 'none';
-    localStorage.setItem('cookiesAccepted', 'false');
-  } else {
-    adminError.textContent = 'Identifiant ou mot de passe incorrect';
+  
+  // Gestion des publicités
+  class AdManager {
+    static hideAllAds() {
+      // Masquer toutes les pubs
+      document.querySelectorAll('.topbar-ads, .ad-card, .sidebar-ad, .pub-container').forEach(ad => {
+        ad.style.display = 'none';
+      });
+      
+      // Ajouter une classe au body pour indiquer qu'il n'y a pas de pubs
+      document.body.classList.add('no-ads');
+    }
+    
+    static showAllAds() {
+      document.querySelectorAll('.topbar-ads, .ad-card, .sidebar-ad, .pub-container').forEach(ad => {
+        ad.style.display = '';
+      });
+      
+      document.body.classList.remove('no-ads');
+    }
+    
+    static createInterstitialAd() {
+      const ads = [
+        {
+          img: 'https://www.picard.fr/on/demandware.static/-/Sites-picard-Library/default/dw53e8a5b3/brandcontent/1464x270px_BANNIERE_HEADER_SNACK_MOBILE.jpg',
+          title: 'Picard - Les snacks surgelés',
+          link: 'https://www.picard.fr'
+        },
+        {
+          img: 'https://www.vivelapub.fr/wp-content/uploads/miniatures/apple3.jpg',
+          title: 'Apple - iPhone 16 Pro',
+          link: 'https://www.apple.com'
+        },
+        {
+          img: 'https://www.lundimatin.fr/wp-content/uploads/2023/03/a-propos-fedex.png',
+          title: 'FedEx - Livraison express',
+          link: 'https://www.fedex.com'
+        }
+      ];
+      
+      const ad = ads[Math.floor(Math.random() * ads.length)];
+      
+      const interstitial = document.createElement('div');
+      interstitial.className = 'interstitial-ad';
+      interstitial.innerHTML = `
+        <div class="interstitial-content">
+          <div class="ad-timer" id="ad-timer">Fermeture dans <span id="timer-count">${CONFIG.AD_CLOSE_DELAY}</span>s</div>
+          <button class="ad-close-btn" id="ad-close" disabled>&times;</button>
+          <a href="${ad.link}" target="_blank">
+            <img src="${ad.img}" alt="${ad.title}">
+            <h2>${ad.title}</h2>
+          </a>
+        </div>
+      `;
+      
+      document.body.appendChild(interstitial);
+      
+      // Timer pour activer le bouton de fermeture
+      let timeLeft = CONFIG.AD_CLOSE_DELAY;
+      const timerElement = interstitial.querySelector('#timer-count');
+      const closeBtn = interstitial.querySelector('#ad-close');
+      
+      const countdown = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = timeLeft;
+        
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          closeBtn.disabled = false;
+          closeBtn.classList.add('active');
+          interstitial.querySelector('.ad-timer').textContent = 'Vous pouvez fermer la publicité';
+        }
+      }, 1000);
+      
+      closeBtn.addEventListener('click', () => {
+        if (!closeBtn.disabled) {
+          interstitial.remove();
+          clearInterval(countdown);
+        }
+      });
+      
+      interstitial.classList.add('show');
+      
+      // Enregistrer l'heure de la dernière pub
+      localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_INTERSTITIAL, Date.now());
+    }
+    
+    static shouldShowInterstitial() {
+      const lastInterstitial = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_INTERSTITIAL);
+      if (!lastInterstitial) return true;
+      
+      const timeSince = Date.now() - parseInt(lastInterstitial);
+      return timeSince >= CONFIG.INTERSTITIAL_DELAY;
+    }
+    
+    static startInterstitialLoop() {
+      // Montrer une pub après 10 secondes, puis toutes les 30 secondes
+      setTimeout(() => {
+        if (this.shouldShowInterstitial()) {
+          this.createInterstitialAd();
+        }
+        
+        setInterval(() => {
+          if (this.shouldShowInterstitial()) {
+            this.createInterstitialAd();
+          }
+        }, CONFIG.INTERSTITIAL_DELAY);
+      }, 10000);
+    }
   }
-});
-const createAccountBtn = document.getElementById('create-account-btn');
-const createAccountModal = document.getElementById('create-account-modal');
-const submitAccountBtn = document.getElementById('submit-account-btn');
-const accountEmail = document.getElementById('account-email');
-const accountMsg = document.getElementById('account-msg');
-const accountError = document.getElementById('account-error');
-
-createAccountBtn.addEventListener('click', () => {
-  createAccountModal.style.display = 'flex';
-});
-
-submitAccountBtn.addEventListener('click', () => {
-  const email = accountEmail.value.trim();
-  if(!email) {
-    accountError.textContent = "Veuillez entrer un email valide.";
-    return;
+  
+  // Initialisation
+  function init() {
+    // Vérifier si l'utilisateur a déjà fait un choix
+    const adsAccepted = localStorage.getItem(CONFIG.STORAGE_KEYS.ADS_ACCEPTED);
+    const userData = localStorage.getItem(CONFIG.STORAGE_KEYS.USER_DATA);
+    
+    if (adsAccepted === 'true') {
+      // L'utilisateur a accepté les pubs
+      elements.overlay.style.display = 'none';
+      AdManager.showAllAds();
+      AdManager.startInterstitialLoop();
+    } else if (userData) {
+      // L'utilisateur a un compte et a refusé les pubs
+      elements.overlay.style.display = 'none';
+      AdManager.hideAllAds();
+    } else {
+      // Première visite - bloquer l'accès
+      elements.overlay.style.display = 'flex';
+    }
   }
-  accountError.textContent = "";
-  accountMsg.textContent = "Compte créé ! Vous pourrez ensuite refuser les pubs avec les codes qui vous seront envoyés à cette adresse.";
-  // Ici tu peux sauvegarder l'email localement ou l’envoyer au serveur
-  localStorage.setItem('userEmail', email);
-  // Ferme le modal après 2s
-  setTimeout(() => createAccountModal.style.display = 'none', 2000);
-});
-// Au chargement, bloque le site si pas encore accepté/refusé
-window.addEventListener('load', () => {
-  const saved = localStorage.getItem('cookiesAccepted');
-  if(!saved) {
-    document.body.classList.add('cookie-blocked');
-    document.getElementById('cookie-banner').style.display = 'block';
-  }
-});
-
-// Quand l'utilisateur accepte les pubs
-document.getElementById('accept-cookies').addEventListener('click', () => {
-  document.body.classList.remove('cookie-blocked');
-  localStorage.setItem('cookiesAccepted', 'true');
-});
-
-// Quand l'utilisateur crée un compte pour pouvoir refuser
-document.getElementById('submit-account-btn').addEventListener('click', () => {
-  const email = document.getElementById('account-email').value.trim();
-  if(email) {
-    localStorage.setItem('userEmail', email);
-    document.body.classList.remove('cookie-blocked');
-    document.getElementById('create-account-modal').style.display = 'none';
-  }
-});
-
-// Ici, tu peux garder la logique pour refuser uniquement si compte existant/admin
-
-</script>
-<script>
- const adImage = document.getElementById('topbar-ad-image');
-const adLink = document.getElementById('topbar-ad-link');
-
-const ads = [
-  { img: 'https://offloadmedia.feverup.com/parissecret.com/wp-content/uploads/2025/09/26160946/Banner_BASTILLE_OPENING_FR-1-1.gif', link: '' },
-  { img: 'https://www.universfreebox.com/wp-content/uploads/2020/02/disney.jpeg', link: '' },
-  { img: 'https://www.lundimatin.fr/wp-content/uploads/2023/03/a-propos-fedex.png', link: '' },
-  { img: 'https://www.vivelapub.fr/wp-content/uploads/miniatures/apple3.jpg', link: '' },
-  { img: 'https://static-pepper.dealabs.com/threads/raw/2UzqT/3062453_1/re/768x768/qt/60/3062453_1.jpg', link: '' }
-];
-
-let currentAd = 0;
-
-function showNextAd() {
-  // Fade out
-  adImage.style.opacity = 0;
-
-  setTimeout(() => {
-    // Change l'image et le lien
-    currentAd = (currentAd + 1) % ads.length;
-    adImage.src = ads[currentAd].img;
-    adLink.href = ads[currentAd].link;
-    // Fade in
-    adImage.style.opacity = 1;
-  }, 500); // correspond à la durée du fade-out
-}
-
-// Défilement toutes les 7 secondes
-setInterval(showNextAd, 7000);
-function disableAds() {
-  const topbarAds = document.getElementById('topbar-ads');
-  topbarAds.style.display = 'none'; // masque complètement l’espace
-}
-
-// Exemple : si tu stockes le choix dans localStorage
-const adsDisabled = localStorage.getItem('cookiesAccepted') === 'false';
-if (adsDisabled) {
-  disableAds();
-}
-
-// Ou après que l’utilisateur clique sur "Non" et qu’il a un compte
-document.getElementById('decline-cookies').addEventListener('click', () => {
-  // Vérifie si l’utilisateur est autorisé à refuser
-  const email = localStorage.getItem('userEmail');
-  if (email) { // compte créé
-    disableAds();
-  }
-});
+  
+  // Accepter les publicités
+  elements.acceptBtn.addEventListener('click', () => {
+    localStorage.setItem(CONFIG.STORAGE_KEYS.ADS_ACCEPTED, 'true');
+    elements.overlay.style.display = 'none';
+    AdManager.showAllAds();
+    AdManager.startInterstitialLoop();
+  });
+  
+  // Refuser les publicités - demander création de compte
+  elements.refuseBtn.addEventListener('click', () => {
+    elements.overlay.style.display = 'none';
+    elements.accountModal.style.display = 'flex';
+  });
+  
+  // Création de compte
+  elements.accountForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const username = document.getElementById('account-username').value;
+    const email = document.getElementById('account-email').value;
+    const password = document.getElementById('account-password').value;
+    const message = document.getElementById('account-message');
+    
+    // Vérifier si l'email existe déjà
+    if (UserDatabase.userExists(email)) {
+      message.textContent = 'Cet email est déjà utilisé';
+      message.className = 'message error';
+      return;
+    }
+    
+    // Créer le compte
+    const user = {
+      username,
+      email,
+      password,
+      createdAt: new Date().toISOString()
+    };
+    
+    UserDatabase.saveUser(user);
+    localStorage.setItem(CONFIG.STORAGE_KEYS.USER_DATA, JSON.stringify(user));
+    localStorage.setItem(CONFIG.STORAGE_KEYS.ADS_ACCEPTED, 'false');
+    
+    message.textContent = '✅ Compte créé avec succès ! Redirection...';
+    message.className = 'message success';
+    
+    setTimeout(() => {
+      elements.accountModal.style.display = 'none';
+      AdManager.hideAllAds();
+      location.reload();
+    }, 2000);
+  });
+  
+  // Connexion
+  elements.loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    const message = document.getElementById('login-message');
+    
+    const user = UserDatabase.findUser(email, password);
+    
+    if (user) {
+      localStorage.setItem(CONFIG.STORAGE_KEYS.USER_DATA, JSON.stringify(user));
+      localStorage.setItem(CONFIG.STORAGE_KEYS.ADS_ACCEPTED, 'false');
+      
+      message.textContent = '✅ Connexion réussie ! Redirection...';
+      message.className = 'message success';
+      
+      setTimeout(() => {
+        elements.loginModal.style.display = 'none';
+        AdManager.hideAllAds();
+        location.reload();
+      }, 2000);
+    } else {
+      message.textContent = '❌ Email ou mot de passe incorrect';
+      message.className = 'message error';
+    }
+  });
+  
+  // Basculer entre login et signup
+  elements.showLoginBtn.addEventListener('click', () => {
+    elements.accountModal.style.display = 'none';
+    elements.loginModal.style.display = 'flex';
+  });
+  
+  elements.showSignupBtn.addEventListener('click', () => {
+    elements.loginModal.style.display = 'none';
+    elements.accountModal.style.display = 'flex';
+  });
+  
+  // Fermer les modales
+  elements.closeAccountModal.addEventListener('click', () => {
+    elements.accountModal.style.display = 'none';
+    elements.overlay.style.display = 'flex';
+  });
+  
+  elements.closeLoginModal.addEventListener('click', () => {
+    elements.loginModal.style.display = 'none';
+    elements.overlay.style.display = 'flex';
+  });
+  
+  // Démarrer
+  init();
+})();
 </script>
   </body>
 </html>
