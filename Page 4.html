@@ -67,7 +67,8 @@
       </li>
         <li><a href="Page 13.html">Catalogue</a></li>
     </ul>
-       <!-- Publicité sidebar -->
+  </nav>
+   <!-- Publicité sidebar -->
 <div class="sidebar-ad">
   <p>PUBLICITÉ</p>
   <a href="https://www.picard.fr" target="_blank">
@@ -258,13 +259,7 @@ Sa carrière illustre la transition des années 1930, où les compromis techniqu
             <button class="delete-btn">Supprimer</button>
           </div>
         </div>
-      </div>    <!-- Publicité -->
-<div class="ad-card">
-  <img src="https://www.picard.fr/on/demandware.static/-/Sites-picard-Library/default/dw53e8a5b3/brandcontent/1464x270px_BANNIERE_HEADER_SNACK_MOBILE.jpg" alt="Pub Picard">
-  <h3>🍕 Découvrez les nouveaux snacks Picard</h3>
-  <p>Livraison gratuite dès 60€ d'achat</p>
-  <a href="https://www.picard.fr" target="_blank" class="btn">Découvrir</a>
-</div>
+      </div>
             <div class="card">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Cassutt-wasabi-N26ES-090221-wc.jpg?20090222000221" alt="Formule 1 Reno">
         <div class="card-content">
@@ -607,6 +602,30 @@ searchInput.addEventListener('input', () => {
       sendBtn.click();
     }
   });
+</script>
+<script>
+  // Afficher la modale newsletter au chargement
+  window.addEventListener('load', () => {
+    document.getElementById('newsletter-modal').classList.add('show');
+  });
+
+  // Bouton fermer
+  document.getElementById('close-newsletter').addEventListener('click', () => {
+    document.getElementById('newsletter-modal').classList.remove('show');
+  });
+
+  // Gestion du formulaire (à adapter avec ton back-end ou service d’envoi)
+  document.getElementById('newsletter-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('newsletter-email').value.trim();
+    if (email) {
+      alert('Merci pour votre abonnement : ' + email);
+      document.getElementById('newsletter-modal').classList.remove('show');
+      // ici tu peux faire un fetch() ou AJAX vers ton serveur pour enregistrer l’email
+    }
+  });
+  
+
 </script>
 <script>
 // ============================================
