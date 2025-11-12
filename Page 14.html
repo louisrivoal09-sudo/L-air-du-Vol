@@ -56,7 +56,7 @@
         </ul>
       </li>
       <ul class="menu">
-      <li><a href="Page 12.html">Liens</a></li>
+      <li><a href="Page 14.html">Liens</a></li>
       <li class="has-submenu">
         <a href="#">A propos</a>
         <ul class="sous-menu">
@@ -85,7 +85,42 @@
 
 
   <main class="main-content"> 
-<main class="main-content">
+   <!-- Section de recherche -->
+    <div class="museum-search-section">
+      <h1>🏛️ Découvrez les Musées Aéronautiques près de chez vous</h1>
+      <p>Entrez le nom de votre ville pour trouver les meilleurs musées, expositions et sites aéronautiques à visiter</p>
+      
+      <div class="search-container">
+        <input 
+          type="text" 
+          id="cityInput" 
+          class="city-input" 
+          placeholder="Entrez votre ville (ex: Paris, Lyon, Toulouse...)"
+          autocomplete="off"
+        >
+        <button id="searchBtn" class="search-btn">Rechercher des musées</button>
+      </div>
+    </div>
+
+    <!-- Indicateur de chargement -->
+    <div id="loading" class="loading">
+      Recherche en cours...
+    </div>
+
+    <!-- Conteneur des résultats -->
+    <div id="resultsContainer" class="results-container">
+      <div class="results-header">
+        <h2>Musées trouvés</h2>
+        <p class="results-count" id="resultsCount"></p>
+      </div>
+      <div id="museumGrid" class="museum-grid"></div>
+    </div>
+
+    <!-- Message aucun résultat -->
+    <div id="noResults" class="no-results" style="display: none;">
+      <h3>Aucun musée trouvé</h3>
+      <p>Essayez avec une autre ville ou une grande agglomération proche de chez vous.</p>
+    </div>
   </main>
   <footer class="footer">
     <div class="footer-content" id="section1">
@@ -112,7 +147,262 @@
     <button id="ai-send-btn">Envoyer</button>
   </div>
 </div>
-  <script>    
+
+  <script>
+    // Base de données des musées aéronautiques en France
+    const museumsDatabase = {
+      'paris': [
+        {
+          name: "Musée de l'Air et de l'Espace",
+          address: "Aéroport de Paris-Le Bourget, 93352 Le Bourget",
+          description: "Le plus grand musée aéronautique de France avec plus de 400 aéronefs exposés. Collections exceptionnelles allant des débuts de l'aviation aux conquêtes spatiales.",
+          highlights: "Concorde, Dakota, Boeing 747, Ariane 5",
+          hours: "10h-18h (fermé le lundi)",
+          price: "Gratuit pour les collections permanentes",
+          website: "https://www.museeairespace.fr",
+          image: "https://static.wixstatic.com/media/7ff35d_2451e20fd87a41398cd788c608db8b9e~mv2.jpg/v1/fill/w_1240,h_930,al_c,q_85/MUSEE%20AIR.jpg",
+          lat: 48.9494,
+          lng: 2.4344
+        }
+      ],
+      'toulouse': [
+        {
+          name: "Aeroscopia",
+          address: "1 Allée André Turcat, 31700 Blagnac",
+          description: "Musée de l'aéronautique situé à proximité de l'usine Airbus. Découvrez les plus beaux avions de l'histoire aéronautique dont le Concorde et l'A380.",
+          highlights: "A380, Concorde, Super Guppy, Caravelle",
+          hours: "9h30-18h (tous les jours)",
+          price: "12€ adulte, 9€ enfant",
+          website: "https://www.aeroscopia.fr",
+          image: "https://static.wixstatic.com/media/3ff0b6_3dfb4ad8e4724c2694e90f05abda0815~mv2.jpg/v1/fill/w_640,h_400,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/3ff0b6_3dfb4ad8e4724c2694e90f05abda0815~mv2.jpg",
+          lat: 43.6352,
+          lng: 1.3677
+        }
+      ],
+      'lyon': [
+        {
+          name: "Musée de l'Aviation de Lyon-Corbas",
+          address: "Aérodrome de Lyon-Corbas, 69960 Corbas",
+          description: "Collection remarquable d'avions militaires et civils. Plus de 30 aéronefs exposés dans d'excellentes conditions de conservation.",
+          highlights: "Mirage III, Mystère IV, Nord 2501",
+          hours: "14h-18h (dimanche)",
+          price: "6€ adulte, 3€ enfant",
+          website: "http://www.musee-aviation-lyon.com",
+          image: "https://www.pagesjaunes.fr/media/newdam/ac/35/5a/00/00/1e/e0/51/6d/c0/5f19ac355a00001ee0516dc0/5f19ac355a00001ee0516dc1.png",
+          lat: 45.6897,
+          lng: 4.9189
+        }
+      ],
+      'marseille': [
+        {
+          name: "Ailes Anciennes Toulouse",
+          address: "Aérodrome de Francazal, 31270 Cugnaux",
+          description: "Association dédiée à la préservation et à la restauration d'avions anciens. Visites guidées passionnantes.",
+          highlights: "Collection d'avions de la Seconde Guerre mondiale",
+          hours: "Sur rendez-vous",
+          price: "Gratuit (dons acceptés)",
+          website: "http://www.aatlse.org",
+          image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/82/cc/9c/ailes-anciennes-toulouse.jpg?w=900&h=-1&s=1",
+          lat: 43.5469,
+          lng: 1.3472
+        }
+      ],
+      'strasbourg': [
+        {
+          name: "Musée de l'Aéronavale",
+          address: "Base d'aéronautique navale, 56700 Lanvéoc-Poulmic",
+          description: "Unique musée dédié à l'aviation navale française. Collections d'avions embarqués et d'hydravions.",
+          highlights: "Étendard IV, Super Frelon, Crusader",
+          hours: "10h-12h / 14h-18h",
+          price: "8€ adulte, 5€ enfant",
+          website: "http://www.aeronavale-musee.com",
+          image: "https://www.rochefort-ocean.com/sites/rochefort-ocean-tourisme/files/styles/gallery_lightbox/public/content/images/rochefort-ocean-rochefort-musee-aeronautique-navale2.jpg?itok=RHJ2bLC2",
+          lat: 48.2819,
+          lng: -4.4542
+        }
+      ],
+      'bordeaux': [
+        {
+          name: "Conservatoire de l'Air et de l'Espace d'Aquitaine",
+          address: "Aérodrome de Bordeaux-Léognan-Saucats, 33850 Léognan",
+          description: "Collection unique de plus de 50 aéronefs. Association dynamique proposant des vols découverte.",
+          highlights: "Mirage F1, Nord 262, hélicoptères",
+          hours: "14h-18h (mercredi et dimanche)",
+          price: "5€ adulte, 2€ enfant",
+          website: "http://www.musee-avions-bordeaux.com",
+          image: "https://www.marsaly.fr/fred/wp-content/uploads/2018/10/CAEA-vue-g%C3%A9n%C3%A9rale.jpg",
+          lat: 44.7239,
+          lng: -0.6014
+        }
+      ],
+      'nantes': [
+        {
+          name: "Musée de l'Aéronautique Navale",
+          address: "Aérodrome de Rochefort-Charente-Maritime, 17300 Rochefort",
+          description: "Riche collection d'avions de la Marine nationale. Site exceptionnel avec visites guidées.",
+          highlights: "Alizé, Neptune, Catalina",
+          hours: "10h-18h (avril à octobre)",
+          price: "9€ adulte, 6€ enfant",
+          website: "http://www.museedelaeronautiquenavale.fr",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWAc6jJ3x_fofwIRP7Jq0X38xso1Ek3xU0nw&s",
+          lat: 45.8881,
+          lng: -0.9831
+        }
+      ],
+      'lille': [
+        {
+          name: "Espace Air Passion",
+          address: "Aérodrome d'Angers-Marcé, 49140 Marcé",
+          description: "L'un des plus beaux musées de l'aviation en France. Plus de 60 avions sur 6000 m² d'exposition.",
+          highlights: "Concorde, Lightning, DC-3",
+          hours: "10h-18h (tous les jours)",
+          price: "10€ adulte, 7€ enfant",
+          website: "https://www.espace-air-passion.fr",
+          image: "https://media.ouest-france.fr/v1/pictures/MjAyMjA4ZWFlOTRmZWM1ZjMwZjUxNWI3ODEwOWIxMTQ4MmFhZjA?width=1260&height=708&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=83dcb8b33e02ce90611100ae63341370d7df58177e02555b47d8dd39e9fc9321",
+          lat: 47.5625,
+          lng: -0.3089
+        }
+      ],
+      'nice': [
+        {
+          name: "Musée de l'Aviation Clément Ader",
+          address: "Base aérienne 118, 31130 Balma",
+          description: "Collections exceptionnelles d'avions militaires français. Nombreux exemplaires uniques.",
+          highlights: "Mirage 2000, Jaguar, Alphajet",
+          hours: "Sur rendez-vous pour groupes",
+          price: "Gratuit",
+          website: "http://www.musee-aviation-clement-ader.fr",
+          image: "https://www.pagesjaunes.fr/media/newdam/ac/35/5a/00/00/1e/e0/51/6d/c0/5f19ac355a00001ee0516dc0/5f19ac355a00001ee0516dc1.png",
+          lat: 43.6158,
+          lng: 1.4989
+        }
+      ]
+    };
+
+    // Éléments DOM
+    const cityInput = document.getElementById('cityInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const loading = document.getElementById('loading');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const museumGrid = document.getElementById('museumGrid');
+    const noResults = document.getElementById('noResults');
+    const resultsCount = document.getElementById('resultsCount');
+
+    // Fonction de recherche
+    searchBtn.addEventListener('click', performSearch);
+    cityInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') performSearch();
+    });
+
+    function performSearch() {
+      const city = cityInput.value.trim().toLowerCase();
+      
+      if (!city) {
+        alert('Veuillez entrer le nom d\'une ville');
+        return;
+      }
+
+      // Afficher le chargement
+      loading.classList.add('show');
+      resultsContainer.classList.remove('show');
+      noResults.style.display = 'none';
+      museumGrid.innerHTML = '';
+
+      // Simuler un délai de recherche
+      setTimeout(() => {
+        loading.classList.remove('show');
+        
+        // Recherche dans la base de données
+        const results = findMuseums(city);
+        
+        if (results.length > 0) {
+          displayResults(results, city);
+        } else {
+          noResults.style.display = 'block';
+        }
+      }, 1500);
+    }
+
+    function findMuseums(city) {
+      // Recherche exacte
+      if (museumsDatabase[city]) {
+        return museumsDatabase[city];
+      }
+
+      // Recherche approximative
+      for (let key in museumsDatabase) {
+        if (key.includes(city) || city.includes(key)) {
+          return museumsDatabase[key];
+        }
+      }
+
+      return [];
+    }
+
+    function displayResults(museums, city) {
+      resultsCount.textContent = `${museums.length} musée${museums.length > 1 ? 's' : ''} trouvé${museums.length > 1 ? 's' : ''} près de ${capitalizeFirstLetter(city)}`;
+      
+      museums.forEach(museum => {
+        const card = createMuseumCard(museum);
+        museumGrid.appendChild(card);
+      });
+
+      resultsContainer.classList.add('show');
+    }
+
+    function createMuseumCard(museum) {
+      const card = document.createElement('div');
+      card.className = 'museum-card';
+      
+      card.innerHTML = `
+        <img src="${museum.image}" alt="${museum.name}" class="museum-image" onerror="this.src='https://via.placeholder.com/400x250/0A2463/FFFFFF?text=${encodeURIComponent(museum.name)}'">
+        <div class="museum-content">
+          <span class="museum-badge">Musée Aéronautique</span>
+          <h3 class="museum-title">${museum.name}</h3>
+          <p class="museum-description">${museum.description}</p>
+          
+          <div class="museum-info">
+            <div class="museum-info-item">
+              <strong>📍 Adresse:</strong>
+              <span>${museum.address}</span>
+            </div>
+            <div class="museum-info-item">
+              <strong>⭐ À voir:</strong>
+              <span>${museum.highlights}</span>
+            </div>
+            <div class="museum-info-item">
+              <strong>🕐 Horaires:</strong>
+              <span>${museum.hours}</span>
+            </div>
+            <div class="museum-info-item">
+              <strong>💰 Tarifs:</strong>
+              <span>${museum.price}</span>
+            </div>
+          </div>
+
+          <div class="museum-actions">
+            <button class="map-btn" onclick="openMap(${museum.lat}, ${museum.lng}, '${museum.name}')">
+              📍 Voir sur la carte
+            </button>
+            <button class="info-btn" onclick="window.open('${museum.website}', '_blank')">
+              ℹ️ Site web
+            </button>
+          </div>
+        </div>
+      `;
+      
+      return card;
+    }
+
+    function openMap(lat, lng, name) {
+      const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${encodeURIComponent(name)}`;
+      window.open(mapsUrl, '_blank');
+    }
+
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    
   const aiBtn = document.getElementById("ai-chat-btn");
   const aiModal = document.getElementById("ai-chat-modal");
   const closeAiBtn = document.getElementById("close-ai-chat");
