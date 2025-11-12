@@ -14,8 +14,8 @@
   /* Couleurs modernes */
   --primary: #0A2463;
   --primary-light: #1E3A8A;
-  --secondary: #FB8500;
-  --accent: #FFB703;
+--secondary: #4B5563;  /* Gris foncé au lieu d'orange */
+  --accent: #6B7280;     /* Gris moyen au lieu de jaune */
   --bg-light: #F8FAFC;
   --bg-white: #FFFFFF;
   --text-dark: #1E293B;
@@ -2400,7 +2400,16 @@ body {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   border-radius: 10px;
 }
+.preview-column {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
 
+.preview-text, .preview-resume {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /* --------- GROUPES DE FORMULAIRE --------- */
 .form-group {
   margin-bottom: 2rem;
