@@ -106,6 +106,20 @@
     <div id="loading" class="loading">
       Recherche en cours...
     </div>
+<!-- Carte Google Maps -->
+<div id="mapContainer" style="margin-top: 2rem;">
+  <h2>📍 Localisation du musée</h2>
+  <iframe 
+    id="museumMap"
+    width="100%"
+    height="450"
+    style="border:0; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    src="https://www.google.com/maps?q=48.8566,2.3522&hl=fr&z=6&output=embed">
+  </iframe>
+</div>
 
     <!-- Conteneur des résultats -->
     <div id="resultsContainer" class="results-container">
@@ -160,7 +174,7 @@
           hours: "10h-18h (fermé le lundi)",
           price: "Gratuit pour les collections permanentes",
           website: "https://www.museeairespace.fr",
-          image: "https://static.wixstatic.com/media/7ff35d_2451e20fd87a41398cd788c608db8b9e~mv2.jpg/v1/fill/w_1240,h_930,al_c,q_85/MUSEE%20AIR.jpg",
+          image: "https://static.wixstatic.com/media/7ff35d_2451e20fd87a41398cd788c608db8b9e~mv2.jpg/v1/fill/w_1240,h_930,al_c,q_85/MUSEE%20AIR.jpg",   
           lat: 48.9494,
           lng: 2.4344
         }
@@ -393,12 +407,45 @@
       
       return card;
     }
+function displayResults(museums, city) {
+  resultsCount.textContent = `${museums.length} musée${museums.length > 1 ? 's' : ''} trouvé${museums.length > 1 ? 's' : ''} près de ${capitalizeFirstLetter(city)}`;
+  
+  museumGrid.innerHTML = ''; // efface les anciens résultats
 
-    function openMap(lat, lng, name) {
-      const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${encodeURIComponent(name)}`;
-      window.open(mapsUrl, '_blank');
-    }
+  museums.forEach(museum => {
+    const card = createMuseumCard(museum);
+    museumGrid.appendChild(card);
+  });
 
+function displayResults(museums, city) {
+  resultsCount.textContent = `${museums.length} musée${museums.length > 1 ? 's' : ''} trouvé${museums.length > 1 ? 's' : ''} près de ${capitalizeFirstLetter(city)}`;
+  
+  museumGrid.innerHTML = ''; // Efface les anciens résultats
+
+  museums.forEach(museum => {
+    const card = createMuseumCard(museum);
+    museumGrid.appendChild(card);
+  });
+
+  // Affiche le premier musée sur la carte automatiquement
+  if (museums.length > 0) {
+    updateMap(museums[0].lat, museums[0].lng, museums[0].name);
+  }
+
+  resultsContainer.classList.add('show');
+}
+
+  resultsContainer.classList.add('show');
+}
+function openMap(lat, lng, name) {
+  updateMap(lat, lng, name);
+  document.getElementById('mapContainer').scrollIntoView({ behavior: 'smooth' });
+}
+
+function updateMap(lat, lng, name) {
+  const mapIframe = document.getElementById('museumMap');
+  mapIframe.src = `https://www.google.com/maps?q=${lat},${lng}&hl=fr&z=14&output=embed`;
+}
     function capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     }
