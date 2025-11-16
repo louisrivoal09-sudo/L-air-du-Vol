@@ -311,7 +311,6 @@
           <li><a href="Page 12.html">Jeux</a></li>
         </ul>
       </li>
-      <li><a href="Page 8.html">💬 Chat en ligne</a></li>
       <li><a href="Page 14.html">Liens</a></li>
       <li class="has-submenu">
         <a href="#">A propos</a>
@@ -325,31 +324,7 @@
   </nav>
 
   <main class="main-content">
-    <!-- Modal pour le pseudo -->
-    <div id="pseudo-modal" class="pseudo-modal">
-      <div class="pseudo-form">
-        <h2>✈️ Bienvenue sur le Chat!</h2>
-        <p>Choisissez votre pseudo pour commencer à discuter</p>
-        <input type="text" id="pseudo-input" placeholder="Votre pseudo..." maxlength="20">
-        <button id="start-chat">Rejoindre le chat</button>
-      </div>
-    </div>
 
-    <div class="chat-container">
-      <div class="chat-header">
-        <h2>💬 Chat en direct - L'Air du vol</h2>
-        <div class="online-users" id="online-users">Chargement...</div>
-      </div>
-      
-      <div class="chat-messages" id="chat-messages">
-        <div class="loading">Chargement des messages...</div>
-      </div>
-      
-      <div class="chat-input-area">
-        <input type="text" id="message-input" placeholder="Écrivez votre message..." maxlength="500">
-        <button id="send-btn">Envoyer</button>
-      </div>
-    </div>
   </main>
 
   <footer class="footer">
@@ -385,168 +360,6 @@
     sidebarToggleBtn.addEventListener('click', () => {
       sidebar.classList.toggle('collapsed');
       body.classList.toggle('menu-collapsed');
-    });
-
-    // Gestion du pseudo
-    const pseudoModal = document.getElementById('pseudo-modal');
-    const pseudoInput = document.getElementById('pseudo-input');
-    const startChatBtn = document.getElementById('start-chat');
-
-    startChatBtn.addEventListener('click', () => {
-      const pseudo = pseudoInput.value.trim();
-      if (pseudo.length >= 3) {
-        currentUser = pseudo;
-        pseudoModal.classList.add('hidden');
-        initChat();
-      } else {
-        alert('Votre pseudo doit contenir au moins 3 caractères');
-      }
-    });
-
-    pseudoInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        startChatBtn.click();
-      }
-    });
-
-    // Fonctions du chat
-    async function initChat() {
-      await updateOnlineUsers();
-      await loadMessages();
-      startMessagePolling();
-    }
-
-    async function updateOnlineUsers() {
-      try {
-        const timestamp = Date.now();
-        await window.storage.set(`user:${currentUser}`, timestamp.toString(), true);
-        
-        // Nettoyer les utilisateurs inactifs (> 5 min)
-        const keys = await window.storage.list('user:', true);
-        let activeUsers = 0;
-        
-        for (const key of keys.keys) {
-          try {
-            const result = await window.storage.get(key, true);
-            const lastSeen = parseInt(result.value);
-            if (timestamp - lastSeen > 300000) {
-              await window.storage.delete(key, true);
-            } else {
-              activeUsers++;
-            }
-          } catch (e) {}
-        }
-        
-        document.getElementById('online-users').textContent = 
-          `👥 ${activeUsers} utilisateur${activeUsers > 1 ? 's' : ''} en ligne`;
-      } catch (e) {
-        console.error('Erreur update users:', e);
-      }
-    }
-
-    async function loadMessages() {
-      try {
-        const keys = await window.storage.list('msg:', true);
-        const messages = [];
-        
-        for (const key of keys.keys) {
-          try {
-            const result = await window.storage.get(key, true);
-            messages.push(JSON.parse(result.value));
-          } catch (e) {}
-        }
-        
-        messages.sort((a, b) => a.timestamp - b.timestamp);
-        
-        const chatMessages = document.getElementById('chat-messages');
-        chatMessages.innerHTML = '';
-        
-        if (messages.length === 0) {
-          chatMessages.innerHTML = '<div class="loading">Aucun message pour le moment. Soyez le premier à écrire! ✈️</div>';
-        } else {
-          messages.slice(-50).forEach(msg => displayMessage(msg));
-        }
-      } catch (e) {
-        console.error('Erreur chargement messages:', e);
-      }
-    }
-
-    function displayMessage(msg) {
-      const chatMessages = document.getElementById('chat-messages');
-      const isOwn = msg.author === currentUser;
-      
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `message ${isOwn ? 'own' : ''}`;
-      
-      const time = new Date(msg.timestamp).toLocaleTimeString('fr-FR', {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      
-      messageDiv.innerHTML = `
-        <div class="message-header">
-          <span class="message-author">${msg.author}</span>
-          <span class="message-time">${time}</span>
-        </div>
-        <div class="message-content">${escapeHtml(msg.content)}</div>
-      `;
-      
-      chatMessages.appendChild(messageDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    async function sendMessage() {
-      const input = document.getElementById('message-input');
-      const content = input.value.trim();
-      
-      if (!content) return;
-      
-      try {
-        const message = {
-          author: currentUser,
-          content: content,
-          timestamp: Date.now()
-        };
-        
-        const msgId = `msg:${message.timestamp}:${Math.random().toString(36).substr(2, 9)}`;
-        await window.storage.set(msgId, JSON.stringify(message), true);
-        
-        input.value = '';
-        await loadMessages();
-        await updateOnlineUsers();
-      } catch (e) {
-        console.error('Erreur envoi message:', e);
-        alert('Erreur lors de l\'envoi du message');
-      }
-    }
-
-    function startMessagePolling() {
-      messageCheckInterval = setInterval(async () => {
-        await loadMessages();
-        await updateOnlineUsers();
-      }, 3000);
-    }
-
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-
-    // Events
-    document.getElementById('send-btn').addEventListener('click', sendMessage);
-    document.getElementById('message-input').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
-
-    // Cleanup on page unload
-    window.addEventListener('beforeunload', () => {
-      if (messageCheckInterval) {
-        clearInterval(messageCheckInterval);
-      }
     });
   </script>
 </body>
