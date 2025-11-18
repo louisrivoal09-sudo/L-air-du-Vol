@@ -97,7 +97,7 @@
     <div class="card-content">
       <h3>Raid sur la Lybie</h3>
       <p>En avril 1986, après l’attentat de Berlin-Ouest attribué formellement à la Libye grâce à l’interception de messages secrets, les États-Unis décident de frapper le régime de Kadhafi. Malgré le refus...</p>
-      <a href="#" class="btn read-more" data-article-id="condor">
+      <a href="#" class="btn read-more" data-article-id="Raid sur la Lybie">
         Lire plus
       </a>
       <div class="article">
@@ -134,7 +134,7 @@
        ======================================== -->
   
   <!-- Template article Condor -->
-  <template id="article-condor">
+  <template id="article-Raid sur la Lybie">
     <div class="preview-resume">
      En avril 1986, après l’attentat de Berlin-Ouest attribué formellement à la Libye grâce à l’interception de messages secrets, les États-Unis décident de frapper le régime de Kadhafi. Malgré le refus de la majorité des pays européens de les soutenir, les Américains obtiennent l’accord du Royaume-Uni, qui met à disposition des bases aériennes essentielles.
      L’opération « El Dorado Canyon » mobilise de nombreux avions militaires américains et se déroule dans la nuit du 14 au 15 avril 1986. Les villes de Tripoli et Benghazi sont bombardées de manière simultanée. Les Américains détruisent plusieurs objectifs stratégiques mais perdent un avion. Cette opération représente une démonstration de force destinée à répondre au terrorisme soutenu par un État.
@@ -321,23 +321,66 @@ Malgré la défense libyenne, peu efficace, un F-111 américain est perdu en mer
       const title = this.dataset.title;
       const content = this.dataset.content;
 
-      fullArticle.innerHTML = `
-        <div class="card">
-          <div class="card-content">
-            <h2>${title}</h2>
-            <p>${content}</p>
-            <button id="close-article" class="btn">Fermer</button>
-          </div>
-        </div>
-      `;
+    // Gestion des articles complets avec templates
+const readMoreButtons = document.querySelectorAll('.read-more');
+const fullArticle = document.getElementById('full-article');
+const articleGrid = document.getElementById('article-grid');
 
-      fullArticle.style.display = 'block';
-      articleGrid.classList.add('blur');
-      document.getElementById('close-article').addEventListener('click', () => {
-        fullArticle.style.display = 'none';
-        fullArticle.innerHTML = '';
-        articleGrid.classList.remove('blur');
-      });
+readMoreButtons.forEach(btn => {
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    // Récupérer l'ID de l'article
+    const articleId = this.dataset.articleId;
+    
+    // Récupérer le template correspondant
+    const template = document.getElementById(`article-${articleId}`);
+    
+    // Récupérer le titre depuis la carte
+    const title = this.closest('.card').querySelector('h3').textContent;
+    
+    // Récupérer la date
+    const date = this.closest('.card').querySelector('.date').textContent;
+
+    // Vérifier si le template existe
+    if (!template) {
+      console.error(`Template "article-${articleId}" introuvable !`);
+      alert('Article non disponible');
+      return;
+    }
+
+    // Afficher l'article complet
+    fullArticle.innerHTML = `
+      <div class="card" style="max-width: 1200px; margin: 0 auto;">
+        <div class="card-content" style="padding: 3rem;">
+          <h1>${title}</h1>
+          <p class="preview-date" style="color: var(--text-gray); margin-bottom: 2rem; font-size: 1rem;">
+            ${date}
+          </p>
+          ${template.innerHTML}
+          <button id="close-article" class="btn" style="margin-top: 3rem; background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);">
+            ← Retour aux articles
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Afficher l'article et flouter la grille
+    fullArticle.style.display = 'block';
+    articleGrid.style.display = 'none';
+    
+    // Scroll vers le haut
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Gérer le bouton de fermeture
+    document.getElementById('close-article').addEventListener('click', () => {
+      fullArticle.style.display = 'none';
+      fullArticle.innerHTML = '';
+      articleGrid.style.display = 'grid';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+});
     });
   });
  </script>

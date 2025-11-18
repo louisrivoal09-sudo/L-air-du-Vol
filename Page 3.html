@@ -96,7 +96,7 @@
     <div class="card-content">
       <h3>Tomcat, félin des mers</h3>
       <p>Le F-14 Tomcat occupe une place unique dans l’histoire de l’aviation militaire. Conçu par Grumman ...</p>
-      <a href="#" class="btn read-more" data-article-id="condor">
+      <a href="#" class="btn read-more" data-article-id="tomcat">
         Lire plus
       </a>
       <div class="article">
@@ -112,24 +112,7 @@
   <p>Livraison gratuite dès 60€ d'achat</p>
   <a href="https://www.picard.fr" target="_blank" class="btn">Découvrir</a>
 </div>
-  <!-- Article Condor -->
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/US_Navy_051105-F-5480T-005_An_F-14D_Tomcat_conducts_a_mission_over_the_Persian_Gulf-region.jpg/1200px-US_Navy_051105-F-5480T-005_An_F-14D_Tomcat_conducts_a_mission_over_the_Persian_Gulf-region.jpg" alt="Tomcat">
-    <div class="card-content">
-      <h3>Tomcat, félin des mers</h3>
-      <p>Le F-14 Tomcat occupe une place unique dans l’histoire de l’aviation militaire. Conçu par Grumman ...</p>
-      <a href="#" class="btn read-more" data-article-id="condor">
-        Lire plus
-      </a>
-      <div class="article">
-        <small class="date">Publié le 15 novembre 2025</small>
-        <small class="date">Catégorie: Grands Avions du Monde</small>
-        <button class="delete-btn">Supprimer</button>
-      </div>
-    </div>
-  </div>
-  </div>
-        <div class="ad-card">
+   <div class="ad-card">
   <img src="https://www.lundimatin.fr/wp-content/uploads/2023/03/a-propos-fedex.png" alt="Pub FedEx">
   <h3>📦 FedEx Express</h3>
   <p>Livraison internationale en 24h</p>
@@ -146,9 +129,7 @@
       <!-- ========================================
        TEMPLATES D'ARTICLES (cachés)
        ======================================== -->
-  
-  <!-- Template article Condor -->
-  <template id="article-condor">
+  <template id="article-tomcat">
     <div class="preview-resume">
       Le F-14 Tomcat occupe une place unique dans l’histoire de l’aviation militaire. Conçu par Grumman pour répondre aux besoins très exigeants de l’US Navy, il combine puissance, polyvalence et innovations technologiques. Pour comprendre la portée de cet appareil mythique, il est possible d’organiser son histoire et ses caractéristiques en trois grands thèmes : sa conception et son évolution technique, son armement et ses performances, puis sa carrière opérationnelle et son exportation très limitée.
     </div>
@@ -237,7 +218,7 @@ Grâce à ce système, le F-14 peut surveiller d’immenses volumes de l’espac
 
   <!-- Script pour le thème et le menu -->
   <script>
-    document.querySelectorAll('.rating').forEach(ratingDiv => {
+      document.querySelectorAll('.rating').forEach(ratingDiv => {
   let selectedValue = 0;
   const stars = ratingDiv.querySelectorAll('span');
 
@@ -330,23 +311,66 @@ Grâce à ce système, le F-14 peut surveiller d’immenses volumes de l’espac
       const title = this.dataset.title;
       const content = this.dataset.content;
 
-      fullArticle.innerHTML = `
-        <div class="card">
-          <div class="card-content">
-            <h2>${title}</h2>
-            <p>${content}</p>
-            <button id="close-article" class="btn">Fermer</button>
-          </div>
-        </div>
-      `;
+    // Gestion des articles complets avec templates
+const readMoreButtons = document.querySelectorAll('.read-more');
+const fullArticle = document.getElementById('full-article');
+const articleGrid = document.getElementById('article-grid');
 
-      fullArticle.style.display = 'block';
-      articleGrid.classList.add('blur');
-      document.getElementById('close-article').addEventListener('click', () => {
-        fullArticle.style.display = 'none';
-        fullArticle.innerHTML = '';
-        articleGrid.classList.remove('blur');
-      });
+readMoreButtons.forEach(btn => {
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    // Récupérer l'ID de l'article
+    const articleId = this.dataset.articleId;
+    
+    // Récupérer le template correspondant
+    const template = document.getElementById(`article-${articleId}`);
+    
+    // Récupérer le titre depuis la carte
+    const title = this.closest('.card').querySelector('h3').textContent;
+    
+    // Récupérer la date
+    const date = this.closest('.card').querySelector('.date').textContent;
+
+    // Vérifier si le template existe
+    if (!template) {
+      console.error(`Template "article-${articleId}" introuvable !`);
+      alert('Article non disponible');
+      return;
+    }
+
+    // Afficher l'article complet
+    fullArticle.innerHTML = `
+      <div class="card" style="max-width: 1200px; margin: 0 auto;">
+        <div class="card-content" style="padding: 3rem;">
+          <h1>${title}</h1>
+          <p class="preview-date" style="color: var(--text-gray); margin-bottom: 2rem; font-size: 1rem;">
+            ${date}
+          </p>
+          ${template.innerHTML}
+          <button id="close-article" class="btn" style="margin-top: 3rem; background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);">
+            ← Retour aux articles
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Afficher l'article et flouter la grille
+    fullArticle.style.display = 'block';
+    articleGrid.style.display = 'none';
+    
+    // Scroll vers le haut
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Gérer le bouton de fermeture
+    document.getElementById('close-article').addEventListener('click', () => {
+      fullArticle.style.display = 'none';
+      fullArticle.innerHTML = '';
+      articleGrid.style.display = 'grid';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+});
     });
   });
  </script>
