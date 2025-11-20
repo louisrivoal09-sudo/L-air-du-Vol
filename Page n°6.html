@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>L'air du vol®/ Aviation civile/ Créer un article</title>
+  <link rel="stylesheet" href="Page 1.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="logo.png" type="image/png">
+</head>
+<body>
+
+  <!-- Barre du haut -->
+  <header class="topbar">
+    <div class="logo-site">
+      <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
+      <img src="logo.png" alt="Logo" class="logo-img">
+      <span class="site-name">L'Air du vol®</span>
+    </div>
+    <button id="toggle-theme">🌙 Mode Sombre</button>
+  </header>
+
+  <!-- Menu latéral vertical -->
+  <nav class="sidebar">
+    <ul class="menu">
+      <li><a href="index.html">Accueil 🏠</a></li>
+      <li class="has-submenu">
+        <a href="#">Articles 📰</a>
+        <ul class="sous-menu">
+          <li><a href="Page n°1.html">Découvrir les articles 📚</a></li>
+          <li><a href="Page n°2.html">Créer un article (authentification requise) 🔏</a></li>
+        </ul>
+     <li class="has-submenu">
+        <a href="#">Médias 💻</a>
+        <ul class="sous-menu">
+          <li><a href="Page n°3.html">Vidéos 🎥</a></li>
+          <li><a href="Page n°4.html">Podcasts 🎙️</a></li>
+          <li><a href="Page n°5.html">Jeux 🎮</a></li>
+        </ul>
+      </li>
+      <ul class="menu">
+      <li><a href="Page n°6.html">Liens 🔗</a></li>
+      <li class="has-submenu">
+        <a href="#">A propos ➕</a>
+        <ul class="sous-menu">
+          <li><a href="Page 8.html">Avis ⭐</a></li>
+          <li><a href="#section1">Conditions générales d'utilisation ⚠️</a></li>
+        </ul>
+      </li>
+    </ul>
+    <!-- Publicité sidebar   -->
+<div class="sidebar-ad">
+  <p>PUBLICITÉ</p>
+  <a href="https://www.picard.fr" target="_blank">
+    <img src="https://www.picard.fr/on/demandware.static/-/Sites-picard-Library/default/dw53e8a5b3/brandcontent/1464x270px_BANNIERE_HEADER_SNACK_MOBILE.jpg" alt="Picard">
+  </a>
+</div>
+
+<div class="sidebar-ad">
+  <p>PUBLICITÉ</p>
+  <a href="https://www.apple.com" target="_blank">
+    <img src="https://www.vivelapub.fr/wp-content/uploads/miniatures/apple3.jpg" alt="Apple">
+  </a>
+</div>
+  </nav>
+
+
+
+  <main class="main-content"> 
+   <!-- Section de recherche -->
+    <div class="museum-search-section">
+      <h1>🏛️ Découvrez les Musées Aéronautiques près de chez vous</h1>
+      <p>Entrez le nom de votre ville pour trouver les meilleurs musées, expositions et sites aéronautiques à visiter</p>
+      
+      <div class="search-container">
+        <input 
+          type="text" 
+          id="cityInput" 
+          class="city-input" 
+          placeholder="Entrez votre ville (ex: Paris, Lyon, Toulouse...)"
+          autocomplete="off"
+        >
+        <button id="searchBtn" class="search-btn">Rechercher des musées</button>
+      </div>
+    </div>
+
+    <!-- Indicateur de chargement -->
+    <div id="loading" class="loading">
+      Recherche en cours...
+    </div>
+<!-- Carte Google Maps -->
+<div id="mapContainer" style="margin-top: 2rem;">
+  <h2>📍 Localisation du musée</h2>
+  <iframe 
+    id="museumMap"
+    width="100%"
+    height="450"
+    style="border:0; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    src="https://www.google.com/maps?q=48.8566,2.3522&hl=fr&z=6&output=embed">
+  </iframe>
+</div>
+
+    <!-- Conteneur des résultats -->
+    <div id="resultsContainer" class="results-container">
+      <div class="results-header">
+        <h2>Musées trouvés</h2>
+        <p class="results-count" id="resultsCount"></p>
+      </div>
+      <div id="museumGrid" class="museum-grid"></div>
+    </div>
+
+    <!-- Message aucun résultat -->
+    <div id="noResults" class="no-results" style="display: none;">
+      <h3>Aucun musée trouvé</h3>
+      <p>Essayez avec une autre ville ou une grande agglomération proche de chez vous.</p>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer-content" id="section1">
+      <h3>Conditions Générales d'Utilisation</h3>
+      <p>En accédant au site <strong>L'Air du vol</strong>, vous acceptez nos conditions générales d'utilisation. Toute reproduction ou diffusion du contenu est interdite sans autorisation.</p>
+      <p>&copy; 2025 - L'Air du vol. Tous droits réservés.</p>
+    </div>
+  </footer>
+  <!-- Bouton flottant -->
+<button id="ai-chat-btn">❔</button>
+
+<!-- Fenêtre de chat -->
+<div id="ai-chat-modal">
+  <div class="ai-chat-header">
+    <h3>Assistant IA</h3>
+    <button id="close-ai-chat">&times;</button>
+  </div>
+  <div class="ai-chat-messages" id="ai-chat-messages"></div>
+  <div class="typing-indicator" id="typing-indicator">
+    <div class="typing-dots"><span></span><span></span><span></span></div>
+  </div>
+  <div class="ai-chat-input">
+    <textarea id="ai-input" placeholder="Écrivez votre message..."></textarea>
+    <button id="ai-send-btn">Envoyer</button>
+  </div>
+</div>
+
+  <script>
+    // Base de données des musées aéronautiques en France
+    const museumsDatabase = {
+      'paris': [
+        {
+          name: "Musée de l'Air et de l'Espace",
+          address: "Aéroport de Paris-Le Bourget, 93352 Le Bourget",
+          description: "Le plus grand musée aéronautique de France avec plus de 400 aéronefs exposés. Collections exceptionnelles allant des débuts de l'aviation aux conquêtes spatiales.",
+          highlights: "Concorde, Dakota, Boeing 747, Ariane 5",
+          hours: "10h-18h (fermé le lundi)",
+          price: "Gratuit pour les collections permanentes",
+          website: "https://www.museeairespace.fr",
+          image: "https://static.wixstatic.com/media/7ff35d_2451e20fd87a41398cd788c608db8b9e~mv2.jpg/v1/fill/w_1240,h_930,al_c,q_85/MUSEE%20AIR.jpg",   
+          lat: 48.9494,
+          lng: 2.4344
+        }
+      ],
+      'toulouse': [
+        {
+          name: "Aeroscopia",
+          address: "1 Allée André Turcat, 31700 Blagnac",
+          description: "Musée de l'aéronautique situé à proximité de l'usine Airbus. Découvrez les plus beaux avions de l'histoire aéronautique dont le Concorde et l'A380.",
+          highlights: "A380, Concorde, Super Guppy, Caravelle",
+          hours: "9h30-18h (tous les jours)",
+          price: "12€ adulte, 9€ enfant",
+          website: "https://www.aeroscopia.fr",
+          image: "https://static.wixstatic.com/media/3ff0b6_3dfb4ad8e4724c2694e90f05abda0815~mv2.jpg/v1/fill/w_640,h_400,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/3ff0b6_3dfb4ad8e4724c2694e90f05abda0815~mv2.jpg",
+          lat: 43.6352,
+          lng: 1.3677
+        }
+      ],
+      'lyon': [
+        {
+          name: "Musée de l'Aviation de Lyon-Corbas",
+          address: "Aérodrome de Lyon-Corbas, 69960 Corbas",
+          description: "Collection remarquable d'avions militaires et civils. Plus de 30 aéronefs exposés dans d'excellentes conditions de conservation.",
+          highlights: "Mirage III, Mystère IV, Nord 2501",
+          hours: "14h-18h (dimanche)",
+          price: "6€ adulte, 3€ enfant",
+          website: "http://www.musee-aviation-lyon.com",
+          image: "https://www.pagesjaunes.fr/media/newdam/ac/35/5a/00/00/1e/e0/51/6d/c0/5f19ac355a00001ee0516dc0/5f19ac355a00001ee0516dc1.png",
+          lat: 45.6897,
+          lng: 4.9189
+        }
+      ],
+      'marseille': [
+        {
+          name: "Ailes Anciennes Toulouse",
+          address: "Aérodrome de Francazal, 31270 Cugnaux",
+          description: "Association dédiée à la préservation et à la restauration d'avions anciens. Visites guidées passionnantes.",
+          highlights: "Collection d'avions de la Seconde Guerre mondiale",
+          hours: "Sur rendez-vous",
+          price: "Gratuit (dons acceptés)",
+          website: "http://www.aatlse.org",
+          image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/82/cc/9c/ailes-anciennes-toulouse.jpg?w=900&h=-1&s=1",
+          lat: 43.5469,
+          lng: 1.3472
+        }
+      ],
+      'strasbourg': [
+        {
+          name: "Musée de l'Aéronavale",
+          address: "Base d'aéronautique navale, 56700 Lanvéoc-Poulmic",
+          description: "Unique musée dédié à l'aviation navale française. Collections d'avions embarqués et d'hydravions.",
+          highlights: "Étendard IV, Super Frelon, Crusader",
+          hours: "10h-12h / 14h-18h",
+          price: "8€ adulte, 5€ enfant",
+          website: "http://www.aeronavale-musee.com",
+          image: "https://www.rochefort-ocean.com/sites/rochefort-ocean-tourisme/files/styles/gallery_lightbox/public/content/images/rochefort-ocean-rochefort-musee-aeronautique-navale2.jpg?itok=RHJ2bLC2",
+          lat: 48.2819,
+          lng: -4.4542
+        }
+      ],
+      'bordeaux': [
+        {
+          name: "Conservatoire de l'Air et de l'Espace d'Aquitaine",
+          address: "Aérodrome de Bordeaux-Léognan-Saucats, 33850 Léognan",
+          description: "Collection unique de plus de 50 aéronefs. Association dynamique proposant des vols découverte.",
+          highlights: "Mirage F1, Nord 262, hélicoptères",
+          hours: "14h-18h (mercredi et dimanche)",
+          price: "5€ adulte, 2€ enfant",
+          website: "http://www.musee-avions-bordeaux.com",
+          image: "https://www.marsaly.fr/fred/wp-content/uploads/2018/10/CAEA-vue-g%C3%A9n%C3%A9rale.jpg",
+          lat: 44.7239,
+          lng: -0.6014
+        }
+      ],
+      'nantes': [
+        {
+          name: "Musée de l'Aéronautique Navale",
+          address: "Aérodrome de Rochefort-Charente-Maritime, 17300 Rochefort",
+          description: "Riche collection d'avions de la Marine nationale. Site exceptionnel avec visites guidées.",
+          highlights: "Alizé, Neptune, Catalina",
+          hours: "10h-18h (avril à octobre)",
+          price: "9€ adulte, 6€ enfant",
+          website: "http://www.museedelaeronautiquenavale.fr",
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWAc6jJ3x_fofwIRP7Jq0X38xso1Ek3xU0nw&s",
+          lat: 45.8881,
+          lng: -0.9831
+        }
+      ],
+      'lille': [
+        {
+          name: "Espace Air Passion",
+          address: "Aérodrome d'Angers-Marcé, 49140 Marcé",
+          description: "L'un des plus beaux musées de l'aviation en France. Plus de 60 avions sur 6000 m² d'exposition.",
+          highlights: "Concorde, Lightning, DC-3",
+          hours: "10h-18h (tous les jours)",
+          price: "10€ adulte, 7€ enfant",
+          website: "https://www.espace-air-passion.fr",
+          image: "https://media.ouest-france.fr/v1/pictures/MjAyMjA4ZWFlOTRmZWM1ZjMwZjUxNWI3ODEwOWIxMTQ4MmFhZjA?width=1260&height=708&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=83dcb8b33e02ce90611100ae63341370d7df58177e02555b47d8dd39e9fc9321",
+          lat: 47.5625,
+          lng: -0.3089
+        }
+      ],
+      'nice': [
+        {
+          name: "Musée de l'Aviation Clément Ader",
+          address: "Base aérienne 118, 31130 Balma",
+          description: "Collections exceptionnelles d'avions militaires français. Nombreux exemplaires uniques.",
+          highlights: "Mirage 2000, Jaguar, Alphajet",
+          hours: "Sur rendez-vous pour groupes",
+          price: "Gratuit",
+          website: "http://www.musee-aviation-clement-ader.fr",
+          image: "https://www.pagesjaunes.fr/media/newdam/ac/35/5a/00/00/1e/e0/51/6d/c0/5f19ac355a00001ee0516dc0/5f19ac355a00001ee0516dc1.png",
+          lat: 43.6158,
+          lng: 1.4989
+        }
+      ]
+    };
+
+    // Éléments DOM
+    const cityInput = document.getElementById('cityInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const loading = document.getElementById('loading');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const museumGrid = document.getElementById('museumGrid');
+    const noResults = document.getElementById('noResults');
+    const resultsCount = document.getElementById('resultsCount');
+
+    // Fonction de recherche
+    searchBtn.addEventListener('click', performSearch);
+    cityInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') performSearch();
+    });
+
+    function performSearch() {
+      const city = cityInput.value.trim().toLowerCase();
+      
+      if (!city) {
+        alert('Veuillez entrer le nom d\'une ville');
+        return;
+      }
+
+      // Afficher le chargement
+      loading.classList.add('show');
+      resultsContainer.classList.remove('show');
+      noResults.style.display = 'none';
+      museumGrid.innerHTML = '';
+
+      // Simuler un délai de recherche
+      setTimeout(() => {
+        loading.classList.remove('show');
+        
+        // Recherche dans la base de données
+        const results = findMuseums(city);
+        
+        if (results.length > 0) {
+          displayResults(results, city);
+        } else {
+          noResults.style.display = 'block';
+        }
+      }, 1500);
+    }
+
+    function findMuseums(city) {
+      // Recherche exacte
+      if (museumsDatabase[city]) {
+        return museumsDatabase[city];
+      }
+
+      // Recherche approximative
+      for (let key in museumsDatabase) {
+        if (key.includes(city) || city.includes(key)) {
+          return museumsDatabase[key];
+        }
+      }
+
+      return [];
+    }
+
+    function displayResults(museums, city) {
+      resultsCount.textContent = `${museums.length} musée${museums.length > 1 ? 's' : ''} trouvé${museums.length > 1 ? 's' : ''} près de ${capitalizeFirstLetter(city)}`;
+      
+      museums.forEach(museum => {
+        const card = createMuseumCard(museum);
+        museumGrid.appendChild(card);
+      });
+
+      resultsContainer.classList.add('show');
+    }
+
+    function createMuseumCard(museum) {
+      const card = document.createElement('div');
+      card.className = 'museum-card';
+      
+      card.innerHTML = `
+        <img src="${museum.image}" alt="${museum.name}" class="museum-image" onerror="this.src='https://via.placeholder.com/400x250/0A2463/FFFFFF?text=${encodeURIComponent(museum.name)}'">
+        <div class="museum-content">
+          <span class="museum-badge">Musée Aéronautique</span>
+          <h3 class="museum-title">${museum.name}</h3>
+          <p class="museum-description">${museum.description}</p>
+          
+          <div class="museum-info">
+            <div class="museum-info-item">
+              <strong>📍 Adresse:</strong>
+              <span>${museum.address}</span>
+            </div>
+            <div class="museum-info-item">
+              <strong>⭐ À voir:</strong>
+              <span>${museum.highlights}</span>
+            </div>
+            <div class="museum-info-item">
+              <strong>🕐 Horaires:</strong>
+              <span>${museum.hours}</span>
+            </div>
+            <div class="museum-info-item">
+              <strong>💰 Tarifs:</strong>
+              <span>${museum.price}</span>
+            </div>
+          </div>
+
+          <div class="museum-actions">
+            <button class="map-btn" onclick="openMap(${museum.lat}, ${museum.lng}, '${museum.name}')">
+              📍 Voir sur la carte
+            </button>
+            <button class="info-btn" onclick="window.open('${museum.website}', '_blank')">
+              ℹ️ Site web
+            </button>
+          </div>
+        </div>
+      `;
+      
+      return card;
+    }
+function displayResults(museums, city) {
+  resultsCount.textContent = `${museums.length} musée${museums.length > 1 ? 's' : ''} trouvé${museums.length > 1 ? 's' : ''} près de ${capitalizeFirstLetter(city)}`;
+  
+  museumGrid.innerHTML = ''; // efface les anciens résultats
+
+  museums.forEach(museum => {
+    const card = createMuseumCard(museum);
+    museumGrid.appendChild(card);
+  });
+
+function displayResults(museums, city) {
+  resultsCount.textContent = `${museums.length} musée${museums.length > 1 ? 's' : ''} trouvé${museums.length > 1 ? 's' : ''} près de ${capitalizeFirstLetter(city)}`;
+  
+  museumGrid.innerHTML = ''; // Efface les anciens résultats
+
+  museums.forEach(museum => {
+    const card = createMuseumCard(museum);
+    museumGrid.appendChild(card);
+  });
+
+  // Affiche le premier musée sur la carte automatiquement
+  if (museums.length > 0) {
+    updateMap(museums[0].lat, museums[0].lng, museums[0].name);
+  }
+
+  resultsContainer.classList.add('show');
+}
+
+  resultsContainer.classList.add('show');
+}
+function openMap(lat, lng, name) {
+  updateMap(lat, lng, name);
+  document.getElementById('mapContainer').scrollIntoView({ behavior: 'smooth' });
+}
+
+function updateMap(lat, lng, name) {
+  const mapIframe = document.getElementById('museumMap');
+  mapIframe.src = `https://www.google.com/maps?q=${lat},${lng}&hl=fr&z=14&output=embed`;
+}
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    
+  const aiBtn = document.getElementById("ai-chat-btn");
+  const aiModal = document.getElementById("ai-chat-modal");
+  const closeAiBtn = document.getElementById("close-ai-chat");
+  const aiMessages = document.getElementById("ai-chat-messages");
+  const aiInput = document.getElementById("ai-input");
+  const sendBtn = document.getElementById("ai-send-btn");
+  const typingIndicator = document.getElementById("typing-indicator");
+
+  aiBtn.addEventListener("click", () => aiModal.classList.toggle("show"));
+  closeAiBtn.addEventListener("click", () => aiModal.classList.remove("show"));
+
+  function addMessage(text, fromUser = false) {
+    const msg = document.createElement("div");
+    msg.textContent = text;
+    msg.className = `ai-message ${fromUser ? "user" : "ai"}`;
+    aiMessages.appendChild(msg);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }
+
+  async function sendMessageToAI(userText) {
+    typingIndicator.classList.add("show");
+    try {
+      const res = await fetch("http://localhost:3000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userText })
+      });
+      const data = await res.json();
+      typingIndicator.classList.remove("show");
+      addMessage(data.reply);
+    } catch {
+      typingIndicator.classList.remove("show");
+      addMessage("⚠️ Erreur de connexion avec l'IA.");
+    }
+  }
+
+  sendBtn.addEventListener("click", () => {
+    const text = aiInput.value.trim();
+    if (text) {
+      addMessage(text, true);
+      aiInput.value = "";
+      sendMessageToAI(text);
+    }
+  });
+
+  aiInput.addEventListener("keypress", e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendBtn.click();
+    }
+  });
+</script>
+<!-- Script pour le thème et le menu -->
+  <script>
+    document.querySelectorAll('.rating').forEach(ratingDiv => {
+  let selectedValue = 0;
+  const stars = ratingDiv.querySelectorAll('span');
+
+  stars.forEach(star => {
+    star.addEventListener('mouseenter', () => {
+      const val = parseInt(star.getAttribute('data-value'));
+      stars.forEach(s => {
+        if (parseInt(s.getAttribute('data-value')) <= val) {
+          s.style.color = '#f5b301';
+          s.style.transform = 'scale(1.2)';
+        } else {
+          s.style.color = '#ccc';
+          s.style.transform = 'scale(1)';
+        }
+      });
+    });
+
+    star.addEventListener('mouseleave', () => {
+      stars.forEach(s => {
+        if (parseInt(s.getAttribute('data-value')) <= selectedValue) {
+          s.style.color = '#f5b301';
+          s.style.transform = 'scale(1)';
+        } else {
+          s.style.color = '#ccc';
+          s.style.transform = 'scale(1)';
+        }
+      });
+    });
+
+    star.addEventListener('click', () => {
+      selectedValue = parseInt(star.getAttribute('data-value'));
+      stars.forEach(s => {
+        if (parseInt(s.getAttribute('data-value')) <= selectedValue) {
+          s.classList.add('selected');
+          s.style.color = '#f5b301';
+          s.style.transform = 'scale(1)';
+        } else {
+          s.classList.remove('selected');
+          s.style.color = '#ccc';
+          s.style.transform = 'scale(1)';
+        }
+      });
+      // Ici tu peux ajouter un appel AJAX pour sauvegarder la note si besoin
+      console.log('Note sélectionnée:', selectedValue);
+    });
+  });
+
+  ratingDiv.addEventListener('mouseleave', () => {
+    stars.forEach(s => {
+      if (parseInt(s.getAttribute('data-value')) <= selectedValue) {
+        s.style.color = '#f5b301';
+        s.style.transform = 'scale(1)';
+      } else {
+        s.style.color = '#ccc';
+        s.style.transform = 'scale(1)';
+      }
+    });
+  });
+});
+
+    const toggleButton = document.getElementById('toggle-theme');
+    const sidebarToggleBtn = document.getElementById('toggle-sidebar');
+    const sidebar = document.querySelector('.sidebar');
+    const body = document.body;
+
+    if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark');
+      toggleButton.textContent = '☀️ Mode Clair';
+    }
+
+    toggleButton.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const isDark = body.classList.contains('dark');
+      toggleButton.textContent = isDark ? '☀️ Mode Clair' : '🌙 Mode Sombre';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    sidebarToggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      body.classList.toggle('menu-collapsed');
+    });
+      const readMoreButtons = document.querySelectorAll('.read-more');
+  const fullArticle = document.getElementById('full-article');
+  const articleGrid = document.getElementById('article-grid');
+
+  readMoreButtons.forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const title = this.dataset.title;
+      const content = this.dataset.content;
+
+      fullArticle.innerHTML = `
+        <div class="card">
+          <div class="card-content">
+            <h2>${title}</h2>
+            <p>${content}</p>
+            <button id="close-article" class="btn">Fermer</button>
+          </div>
+        </div>
+      `;
+
+      fullArticle.style.display = 'block';
+      articleGrid.classList.add('blur');
+      document.getElementById('close-article').addEventListener('click', () => {
+        fullArticle.style.display = 'none';
+        fullArticle.innerHTML = '';
+        articleGrid.classList.remove('blur');
+      });
+    });
+  });
+ </script>
+</body>
+</html>
