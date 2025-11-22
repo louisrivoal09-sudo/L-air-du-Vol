@@ -6,8 +6,121 @@
   <link rel="stylesheet" href="Page 1.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+   <!-- ========================================
+       TUTORIEL ONBOARDING (première visite)
+       ======================================== -->
+  <div id="tutorial-overlay">
+    <div class="tutorial-card">
+      <div class="tutorial-step active" data-step="1">
+        <h2>👋 Bienvenue sur L'Air du Vol !</h2>
+        <div class="tutorial-content">
+          <p style="font-size: 1.125rem; line-height: 1.8; color: var(--text-gray);">
+            Découvrez le premier portail francophone dédié à l'aviation civile, militaire et spatiale.
+            Laissez-nous vous guider à travers les fonctionnalités principales.
+          </p>
+          <div class="tutorial-feature">
+            <div class="tutorial-feature-icon">📰</div>
+            <div>
+              <strong>Articles approfondis</strong>
+              <p>Explorez des centaines d'articles détaillés sur l'histoire de l'aviation</p>
+            </div>
+          </div>
+          <div class="tutorial-feature">
+            <div class="tutorial-feature-icon">🎥</div>
+            <div>
+              <strong>Contenus multimédias</strong>
+              <p>Vidéos, podcasts et simulations de vol</p>
+            </div>
+          </div>
+        </div>
+        <div class="tutorial-buttons">
+          <button class="tutorial-btn primary" onclick="nextTutorialStep()">Suivant →</button>
+          <button class="tutorial-btn secondary" onclick="skipTutorial()">Passer</button>
+        </div>
+        <div class="tutorial-progress">
+          <div class="tutorial-dot active"></div>
+          <div class="tutorial-dot"></div>
+          <div class="tutorial-dot"></div>
+        </div>
+      </div>
+
+      <div class="tutorial-step" data-step="2">
+        <h2>🎨 Personnalisez votre expérience</h2>
+        <div class="tutorial-content">
+          <div class="tutorial-feature">
+            <div class="tutorial-feature-icon">🌙</div>
+            <div>
+              <strong>Mode sombre</strong>
+              <p>Activez le mode sombre pour une lecture confortable, même la nuit</p>
+            </div>
+          </div>
+          <div class="tutorial-feature">
+            <div class="tutorial-feature-icon">📱</div>
+            <div>
+              <strong>Responsive</strong>
+              <p>Profitez d'une expérience optimale sur tous vos appareils</p>
+            </div>
+          </div>
+          <div class="tutorial-feature">
+            <div class="tutorial-feature-icon">🔍</div>
+            <div>
+              <strong>Recherche avancée</strong>
+              <p>Filtrez par catégorie, date ou mots-clés</p>
+            </div>
+          </div>
+        </div>
+        <div class="tutorial-buttons">
+          <button class="tutorial-btn secondary" onclick="prevTutorialStep()">← Précédent</button>
+          <button class="tutorial-btn primary" onclick="nextTutorialStep()">Suivant →</button>
+        </div>
+        <div class="tutorial-progress">
+          <div class="tutorial-dot"></div>
+          <div class="tutorial-dot active"></div>
+          <div class="tutorial-dot"></div>
+        </div>
+      </div>
+
+      <div class="tutorial-step" data-step="3">
+        <h2>🚀 Prêt à décoller !</h2>
+        <div class="tutorial-content">
+          <div class="tutorial-feature">
+            <div class="tutorial-feature-icon">📥</div>
+            <div>
+              <strong>Téléchargement</strong>
+              <p>Sauvegardez vos articles favoris en PDF</p>
+            </div>
+          </div>
+          <div class="tutorial-feature">
+            <div class="tutorial-feature-icon">🔗</div>
+            <div>
+              <strong>Partage</strong>
+              <p>Partagez vos découvertes sur les réseaux sociaux</p>
+            </div>
+          </div>
+          <div class="tutorial-feature">
+            <div class="tutorial-feature-icon">❔</div>
+            <div>
+              <strong>Assistant IA</strong>
+              <p>Posez vos questions à notre assistant intelligent</p>
+            </div>
+          </div>
+        </div>
+        <div class="tutorial-buttons">
+          <button class="tutorial-btn secondary" onclick="prevTutorialStep()">← Précédent</button>
+          <button class="tutorial-btn primary" onclick="finishTutorial()">Commencer 🎉</button>
+        </div>
+        <div class="tutorial-progress">
+          <div class="tutorial-dot"></div>
+          <div class="tutorial-dot"></div>
+          <div class="tutorial-dot active"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Barre du haut -->
   <header class="topbar">
+    
       <button id="toggle-sidebar" class="sidebar-toggle">☰</button>
     <div class="logo-site">
       <img src="logo.png" alt="Logo" class="logo-img">
@@ -62,315 +175,126 @@
 
   <!-- Contenu principal -->
   <main class="main-content">
-    <h1>Accueil</h1>
-<!-- Bloc publicité -->
- <h2>Nos derniers articles</h2>
-    <section id="full-article" class="full-article" style="display: none;"></section>
-<section id="article-grid" class="grid-articles">
-  <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/US_Navy_051105-F-5480T-005_An_F-14D_Tomcat_conducts_a_mission_over_the_Persian_Gulf-region.jpg/1200px-US_Navy_051105-F-5480T-005_An_F-14D_Tomcat_conducts_a_mission_over_the_Persian_Gulf-region.jpg" alt="Tomcat">
-    <div class="card-content">
-      <h3>Tomcat, félin des mers</h3>
-      <p>Le F-14 Tomcat occupe une place unique dans l’histoire de l’aviation militaire. Conçu par Grumman ...</p>
-      <a href="#" class="btn read-more" data-article-id="tomcat">
-        Lire plus
-      </a>
-      <div class="article">
-        <small class="date">Publié le 15 novembre 2025</small>
-        <small class="date">Catégorie: Grands Avions du Monde</small>
-        <button class="delete-btn">Supprimer</button>
+    <section class="hero-section">
+      <h1>Bienvenue dans l'univers de l'aviation</h1>
+      <p>Explorez l'histoire fascinante de l'aéronautique à travers nos articles, vidéos et contenus exclusifs</p>
+    </section>
+
+    <!-- Quick Stats -->
+    <div class="quick-stats">
+      <div class="stat-card">
+        <div class="stat-icon">✈️</div>
+        <div class="stat-number">250+</div>
+        <div class="stat-label">Articles publiés</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎥</div>
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Vidéos disponibles</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎙️</div>
+        <div class="stat-number">30+</div>
+        <div class="stat-label">Épisodes de podcasts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-number">10k+</div>
+        <div class="stat-label">Lecteurs actifs</div>
       </div>
     </div>
-  </div>
-</div>
-   <div class="card">
-    <img src="https://defense.info/wp-content/uploads/2020/01/ss1-1024x675-1.jpg" alt="Tomcat">
-    <div class="card-content">
-      <h3>Raid sur la Lybie</h3>
-      <p>En avril 1986, après l’attentat de Berlin-Ouest attribué formellement à la Libye grâce à l’interception de messages secrets, les États-Unis décident de frapper le régime de Kadhafi. Malgré le refus...</p>
-      <a href="#" class="btn read-more" data-article-id="Raid sur la Lybie">
-        Lire plus
-      </a>
-      <div class="article">
-        <small class="date">Publié le 15 novembre 2025</small>
-        <small class="date">Catégorie: Opérations militaires</small>
-        <button class="delete-btn">Supprimer</button>
-      </div>
-    </div>
-    </div>
-        <div class="card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/South_African_Airlink_Boeing_737-200_Advanced_Smith.jpg/500px-South_African_Airlink_Boeing_737-200_Advanced_Smith.jpg" alt="Boeing 737">
-    <div class="card-content">
-      <h3>Boeing 737 : le cap des 3000</h3>
-      <p> Le Boeing 737 naît en 1964 alors que Boeing cherche à occuper le marché des court-courriers dominé par le DC-9 et la Caravelle. Conçu avec ...</p>
-      <a href="#" class="btn read-more" data-article-id="boeing 737: le cap des 3000">
-        Lire plus
-      </a>
-      <div class="article">
-        <small class="date">Publié le 18 novembre 2025</small>
-        <small class="date">Catégorie: Aviation civile</small>
-        <button class="delete-btn">Supprimer</button>
-      </div>
-    </div>
-  </div>
-  <!-- Autres articles... -->
-</section>
-      <!-- ========================================
-       TEMPLATES D'ARTICLES (cachés)
-       ======================================== -->
-  <template id="article-boeing 737: le cap des 3000">
-    <div class="preview-resume">
-      Le Boeing 737 naît en 1964 alors que Boeing cherche à occuper le marché des court-courriers dominé par le DC-9 et la Caravelle. Conçu avec des innovations marquantes, notamment l’installation des réacteurs sous les ailes, il attire rapidement l’attention de Lufthansa et United, permettant le lancement du programme. Pourtant, les débuts sont difficiles : les pilotes américains imposent un équipage trop nombreux et les premières versions souffrent de défauts techniques, donnant l’avantage au DC-9. À partir de 1970, Boeing redonne un nouvel élan au programme en créant des versions Advanced et en ciblant les marchés régionaux, charters et internationaux. Le choc pétrolier, la dérégulation américaine et l’amélioration des performances propulsent le 737 au sommet des ventes. Dans les années 1980 et 1990, les versions 300, 400 et 500 modernisent profondément l’appareil, lui offrant plus de sièges, une consommation réduite et une avionique modernisée. Le 737 devient alors l’un des avions les plus vendus de l’histoire, dépassant largement ses concurrents.
-    </div>
-    
-    <h2 class="preview-theme">Thème I – La genèse du Boeing 737 et la naissance d’un nouveau marché</h2>
-    
-    <h3 class="preview-section-title">A. L’apparition du besoin d’un biréacteur léger</h3>
-    <p class="preview-text">
-     Au début des années 1960, Boeing prend conscience qu’un segment important du marché aérien lui échappe : celui des avions courts-courriers de 100 passagers, dominé par le DC-9, la Caravelle et le BAC 111. Alors que le 727 connaît un grand succès, la montée de versions plus capacitaires chez Douglas laisse craindre une concurrence directe. Les compagnies américaines et étrangères cherchent des appareils un peu plus grands que les modèles existants, ce qui pousse Boeing à envisager le développement d’un nouveau biréacteur. Les travaux commencent finalement en 1964, alors que l’entreprise dispose d’équipes disponibles et souhaite réutiliser l’expérience acquise sur le 727.
-    </p>
-      <h3 class="preview-section-title">B. Un appareil conçu pour se distinguer de la concurrence</h3>
-    <p class="preview-text">
-      Dès les premiers croquis, le futur 737 se distingue des autres avions en plaçant ses réacteurs sous les ailes plutôt qu’à l’arrière du fuselage. Ce choix technique permet une réduction de masse d’environ 500 kg, une cabine plus large avec six sièges de front et un train d’atterrissage plus bas et plus simple. Les ingénieurs affinent la conception en allongeant les nacelles et en supprimant les pylônes de séparation, ce qui réduit la traînée et diminue le coût structurel. L’avion attire l’attention de plusieurs compagnies, notamment Lufthansa qui passe la première commande ferme, poussant Boeing à lancer définitivement le programme, bientôt rejoint par United avec une version rallongée.
-    </p>
-    <h2 class="preview-theme">Thème II – Les difficultés commerciales et techniques des premières années</h2>
-    
-    <h3 class="preview-section-title">A. Un accueil mitigé, des décisions syndicales et des défauts techniques</h3>
-    <p class="preview-text">
-      Malgré les espoirs de Boeing, le 737 connaît un démarrage lent. Le syndicat des pilotes américains impose initialement un équipage de trois personnes, rendant l’exploitation du 737 plus coûteuse que celle du DC-9, pourtant piloté par deux hommes. Cette décision retarde l’adoption de l’appareil par les compagnies américaines, tandis qu’en Europe Douglas remporte plusieurs contrats majeurs. Aux problèmes commerciaux s’ajoutent des complications techniques : dans les essais, les performances aérodynamiques déçoivent, les inverseurs de poussée fonctionnent mal et les carénages des réacteurs doivent être redessinés. Même si Boeing corrige ces défauts avant les premières livraisons, l’image du 737-100 en sort affaiblie.
-    </p>   
-    <h3 class="preview-section-title">B. Les premières versions et l’élargissement progressif du marché</h3>
-    <p class="preview-text">
-      Le 737-100, produit à seulement quelques dizaines d’exemplaires, laisse rapidement sa place au 737-200, plus grand, plus rentable et mieux adapté aux besoins des compagnies. Boeing propose aussi des versions mixtes pour passagers et fret, notamment la version QC (Quick Change) capable de transformer la cabine en quelques minutes. Malgré cela, les ventes restent modestes par rapport au DC-9, jusqu’à ce qu’une crise frappant Boeing en 1969 pousse l’entreprise à concentrer ses efforts sur ses appareils les plus rentables. Le constructeur développe alors la version 737 Advanced, plus puissante, capable d’opérer sur pistes courtes et plus flexible pour les compagnies de petite et moyenne taille.
-    </p>
-       <h2 class="preview-theme">Thème III – L’essor international du 737 et sa transformation en une famille complète</h2>
-    
-    <h3 class="preview-section-title">A.L’expansion mondiale et la domination sur le marché des court-courriers</h3>
-    <p class="preview-text">
-    Dans les années 1970, l’amélioration du 737 Advanced et les nouveaux besoins liés à la libéralisation du transport aérien relancent fortement les ventes. Le premier choc pétrolier renforce encore l’intérêt pour un avion économique et adaptable. Le 737 devient rapidement l’avion privilégié des compagnies régionales américaines et des transporteurs charter européens. Il s’impose aussi dans les pays du Moyen-Orient, d’Afrique et d’Asie du Sud-Est, où son autonomie et ses performances sur pistes rudimentaires séduisent les gouvernements. À la fin des années 1970 et au début des années 1980, le 737 dépasse même le 727 en nombre de commandes annuelles et devient progressivement le biréacteur à court rayon d’action le plus vendu au monde.
-    </p>   
-    <h3 class="preview-section-title">B. Les versions modernisées : 737-300, 737-400 et 737-500</h3>
-    <p class="preview-text">
-    Pour maintenir la compétitivité du 737 face à l’Airbus A320 ou au MD-80, Boeing lance au début des années 1980 une nouvelle génération, inaugurée par le 737-300. L’un des défis majeurs est l’intégration de moteurs à fort taux de dilution, plus économiques mais trop volumineux pour un avion à train court. La solution consiste à aplatir la partie inférieure des réacteurs CFM56 et à les avancer sous l’aile. Le 737-300 offre une consommation réduite de 25 à 30 %. Suivent le 737-400, version allongée pour 150 à 170 passagers, puis le 737-500, qui reprend le gabarit du 737-200 tout en intégrant la nouvelle avionique et les moteurs modernes. Au début des années 1990, ces modèles dépassent les 1 000 ventes cumulées et assurent la domination commerciale du programme.
-    </p>  
-    <h2 class="preview-conclusion-title">Conclusion</h2>
-    <p class="preview-conclusion-text">
-    Le Boeing 737 est passé en quelques décennies d’un appareil lancé dans l’incertitude à l’un des avions les plus emblématiques du transport aérien mondial. Son succès repose sur un équilibre entre innovation technique, flexibilité d’utilisation et amélioration continue. D’abord freiné par la concurrence et des obstacles techniques, il trouve sa place grâce à son adaptabilité et à l’évolution des marchés. Les différentes versions, du 737-100 au 737-500, ont progressivement construit une véritable famille d’avions capable de répondre à presque tous les besoins du court-courrier. Le cap symbolique des 3 000 exemplaires, atteint au début des années 1990, confirme la transformation du 737 en un standard mondial, durable et incontournable dans l’histoire de l’aviation civile.
-    </p>
-     <!-- ========================================
-       GALERIE D'IMAGES
-       ======================================== -->
-  <div class="article-gallery">
-    <h3>📸 Galerie photos</h3>
-    
-    <div class="gallery-grid">
-      <div class="gallery-item" data-caption="Le prototype du 737, un modèle 100 utilisé par la NASA pour des essais.">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Boeing_737_NASA_GPN-2000-001905.jpg/500px-Boeing_737_NASA_GPN-2000-001905.jpg" alt="Le prototype du 737, un modèle 100 utilisé par la NASA pour des essais.">
-        <div class="gallery-caption">Le prototype du 737, un modèle 100 utilisé par la NASA pour des essais.  </div>
-      </div>
-      
-      <div class="gallery-item" data-caption="Un des premiers Boeing 737-100 aux couleurs de la Lufthansa, client de lancement de l'avion, à l'aéroport de Stockholm-Arlanda en 1968.">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Lufthansa_737-130_D-ABEK.jpg/500px-Lufthansa_737-130_D-ABEK.jpg" alt="Un des premiers Boeing 737-100 aux couleurs de la Lufthansa, client de lancement de l'avion, à l'aéroport de Stockholm-Arlanda en 1968.">
-        <div class="gallery-caption">Un des premiers Boeing 737-100 aux couleurs de la Lufthansa, client de lancement de l'avion, à l'aéroport de Stockholm-Arlanda en 1968.</div>
-      </div>
-      
-      <div class="gallery-item" data-caption="Ecorché d'un boeing 737">
-        <img src="https://i.pinimg.com/1200x/0e/20/e8/0e20e8ab0ad475bf863c8b5787434aac.jpg" alt="Ecorché d'un boeing 737">
-        <div class="gallery-caption">Ecorché d'un boeing 737</div>
-      </div>
-      
-      <div class="gallery-item" data-caption="Un 737-200 modernisé, aux couleurs de United Airlines, vu avec les inverseurs de poussée déployés.">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/United_Airlines_Boeing_737-222_Marmet.jpg/500px-United_Airlines_Boeing_737-222_Marmet.jpg" alt="Un 737-200 modernisé, aux couleurs de United Airlines, vu avec les inverseurs de poussée déployés.">
-        <div class="gallery-caption">Un 737-200 modernisé, aux couleurs de United Airlines, vu avec les inverseurs de poussée déployés.</div>
-      </div>
-      
-      <div class="gallery-item" data-caption="Vue de dessous d'un 737-200, exposant la voilure.">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Boeing_737-200_planform_view.jpg/500px-Boeing_737-200_planform_view.jpg" alt="Vue de dessous d'un 737-200, exposant la voilure.">
-        <div class="gallery-caption">Vue de dessous d'un 737-200, exposant la voilure.</div>
-      </div>
-      
-      <div class="gallery-item" data-caption="Comparaison des différentes versions 737.">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Boeing_737_family_v1.0.png/1280px-Boeing_737_family_v1.0.png" alt="Comparaison des différentes versions 737.">
-        <div class="gallery-caption">Comparaison des différentes versions 737.</div>
-      </div>
-    </div>
-  </div>
-  </template>
-  <template id="article-tomcat">
-    <div class="preview-resume">
-      Le F-14 Tomcat occupe une place unique dans l’histoire de l’aviation militaire. Conçu par Grumman pour répondre aux besoins très exigeants de l’US Navy, il combine puissance, polyvalence et innovations technologiques. Pour comprendre la portée de cet appareil mythique, il est possible d’organiser son histoire et ses caractéristiques en trois grands thèmes : sa conception et son évolution technique, son armement et ses performances, puis sa carrière opérationnelle et son exportation très limitée.
-    </div>
-    
-    <h2 class="preview-theme">Thème I – Conception et évolution technique du F-14 Tomcat</h2>
-    
-    <h3 class="preview-section-title">A. Développement initial et innovations majeures</h3>
-    <p class="preview-text">
-     Le F-14A Tomcat s’inscrit dans la continuité d’une longue tradition aéronautique de la firme Grumman, déjà célèbre pour ses chasseurs embarqués comme le Hellcat, le Tigercat ou le Panther. Lorsque le Tomcat est développé à la fin des années 1960, Grumman possède une expertise impressionnante, ce qui explique en partie la rapidité avec laquelle l’appareil devient un intercepteur d’élite. Son premier vol, réalisé en décembre 1970, montre immédiatement le potentiel de la machine, même si le prototype est rapidement perdu à cause d’une rupture hydraulique. Les ingénieurs profitent de l’accident pour renforcer l’ensemble en remplaçant certaines pièces en acier par du titane.
-L’innovation la plus spectaculaire reste toutefois l’aile à géométrie variable. De nombreux avions de cette génération expérimentent cette technologie, mais le Tomcat en est l’un des meilleurs représentants. Ses ailes peuvent se replier ou s’étendre automatiquement en fonction de la vitesse, permettant d’excellentes performances au décollage, une bonne stabilité en vol subsonique et une capacité remarquable à atteindre des vitesses transsoniques et supersoniques. Cette polyvalence aérodynamique fait du Tomcat un appareil capable de remplir efficacement des missions très différentes, de la couverture aérienne au combat rapproché.
-    </p>
-      <h3 class="preview-section-title">B. Système de conduite de tir et radar AWG-9</h3>
-    <p class="preview-text">
-      L’un des aspects les plus révolutionnaires du F-14 réside dans son système de conduite de tir. L’avion est équipé du radar Hughes AWG-9, directement issu du programme du F-111B. Ce radar est un véritable bijou technologique : il permet de détecter des cibles à plus de 185 km, de suivre simultanément vingt-quatre appareils et d’en engager six à la fois. À l’époque, aucun autre chasseur au monde n’offre une telle capacité.
-Grâce à ce système, le F-14 peut surveiller d’immenses volumes de l’espace aérien autour du porte-avions et détecter des menaces bien avant que l’ennemi ne réalise qu’il est repéré. Ce radar donne toute sa puissance au missile Phoenix, conçu pour frapper à très grande distance. L’ensemble radar-missile forme un système d’arme cohérent, pensé pour contrer les attaques massives de bombardiers soviétiques durant la Guerre froide.
-    </p>
-    <h2 class="preview-theme">Thème II – Armement, performances et modernisations</h2>
-    
-    <h3 class="preview-section-title">A. Un arsenal complet pour toutes les distances</h3>
-    <p class="preview-text">
-      Le F-14 Tomcat est l’un des avions les mieux armés de sa génération. Il peut mener des interceptions à courte, moyenne et longue distance grâce à une grande diversité de missiles : l’AIM-9 Sidewinder pour le combat rapproché, l’AIM-7 Sparrow pour les engagements à moyenne portée et surtout l’AIM-54 Phoenix pour les attaques à très longue portée. Le Phoenix est une arme exceptionnelle : il peut frapper une cible à plus de 160 km, et certains essais atteignent même des objectifs simulés à plus de 200 km. Le F-14 est aussi équipé d’un canon interne M61A-1, un Vulcan de 20 mm, pour les combats tournoyants qui exigent une grande maniabilité.
-      Les essais du Phoenix témoignent de son efficacité : tir contre une cible volant à Mach 1,5, interception d’un missile de croisière à très basse altitude, ou encore lancement de six missiles en trente-huit secondes, dont quatre atteignent leur but. Ces performances montrent l’extrême puissance offensive du Tomcat, capable de neutraliser plusieurs menaces simultanément.
-    </p>   
-    <h3 class="preview-section-title">B. Problèmes moteurs et modernisations continues</h3>
-    <p class="preview-text">
-      Malgré ses performances, le F-14 rencontre initialement d’importants problèmes liés à son moteur TF30. Celui-ci, déjà critiqué sur d’autres avions, se révèle instable dans certaines phases de vol et provoque des pannes fréquentes. L’US Navy pousse alors à l’installation d’un moteur plus fiable et plus puissant, ce qui conduit à l’adoption du General Electric F-110 dans les années 1980. Cette amélioration donne naissance au F-14A(Plus), puis au F-14D, doté également d’un radar APG-71, d’une avionique numérique avancée et d’un cockpit modernisé.
-      Parallèlement, l’armement évolue : nouveaux missiles Sidewinder AIM-9M, Sparrow AIM-7M et surtout arrivée du moderne AIM-120 AMRAAM, plus précis et plus résistant aux contre-mesures. Le système de télévision AXX-1 est ajouté pour identifier visuellement des cibles à très longue distance, ce qui renforce l’efficacité du radar. Enfin, les versions plus récentes du missile Phoenix, comme l’AIM-54C, gagnent en vitesse, en portée et en résistance aux brouillages.
-    </p>
-       <h2 class="preview-theme">Thème III – Carrière opérationnelle et exportations</h2>
-    
-    <h3 class="preview-section-title">A. Service actif dans l’US Navy</h3>
-    <p class="preview-text">
-    Le F-14 entre officiellement en service en 1974 au sein des squadrons VF-1 et VF-2 embarqués sur l’USS Enterprise. Il devient rapidement le principal chasseur d’interception de l’US Navy et participe à de multiples déploiements dans l’Atlantique et le Pacifique. Dix-huit squadrons l’adoptent, ainsi que des unités de réserve et des unités d'entraînement.
-    En plus de l’interception, le F-14 joue un rôle important dans la reconnaissance grâce au pod TARPS, qui permet de photographier des zones entières avec une très grande précision, de jour comme de nuit. Cette polyvalence renforce sa valeur stratégique dans les missions navales complexes.
-    </p>   
-    <h3 class="preview-section-title">B. Exportation limitée et projets inaboutis</h3>
-    <p class="preview-text">
-    Même si le F-14 est un appareil remarquable, il n’est exporté qu’à un seul pays : l’Iran du Shah, qui en commande quatre-vingts entre 1976 et 1978 pour contrer les survols du territoire par les MiG-25 soviétiques. Les États-Unis, soucieux de préserver les secrets de l’appareil, refusent de le vendre à d’autres pays, notamment en raison de son radar et de son missile Phoenix.
-    Dans les années 1990, un projet baptisé Attack Super Tomcat 21 envisage une version du F-14 capable d’emporter des bombes nucléaires et de remplacer le programme annulé du A-12 Avenger II. Malgré des capacités prometteuses, ce projet ne sera jamais mené à bien.
-    </p>  
-    <h2 class="preview-conclusion-title">Conclusion</h2>
-    <p class="preview-conclusion-text">
-    Le F-14 Tomcat demeure un symbole de la puissance aéronavale américaine. Sa conception sophistiquée, son radar révolutionnaire et ses missiles longue portée en font un intercepteur sans équivalent durant plusieurs décennies. Bien que ses débuts aient été entachés par des problèmes moteurs, les améliorations successives lui ont permis de s’imposer comme l’un des chasseurs embarqués les plus performants de l’histoire. Sa carrière opérationnelle, marquée par de nombreux déploiements et par son rôle clé dans la surveillance du ciel au-dessus des porte-avions américains, a laissé une empreinte durable dans l’histoire militaire. Le Tomcat incarne l’évolution constante de la technologie au service de la domination aérienne, et reste aujourd’hui encore une référence incontournable dans le domaine de l’interception navale.
-    </p>
-     <!-- ========================================
-       GALERIE D'IMAGES
-       ======================================== -->
-  <div class="article-gallery">
-    <h3>📸 Galerie photos</h3>
-    
-    <div class="gallery-grid">
-      <div class="gallery-item" data-caption="Ecorché du F-14 Tomcat">
-        <img src="https://warhistory.org/media/2024/01/1706506093_938_Grumman-F-14-Tomcat-1970.jpg" alt="Ecorché du F-14 Tomcat">
-        <div class="gallery-caption">Ecorché du F-14 Tomcat</div>
-      </div>
-      
-      <div class="gallery-item" data-caption="F-14D en 2003 sur l'USS Abraham Lincoln">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Tomcat.f14.750pix.jpg/500px-Tomcat.f14.750pix.jpg" alt="F-14D en 2003 sur l'USS Abraham Lincoln">
-        <div class="gallery-caption">F-14D en 2003 sur l'USS Abraham Lincoln</div>
-      </div>
-      
-      <div class="gallery-item" data-caption="Photo d'un cockpit de F-14A">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/ECN-13222-small.jpg/500px-ECN-13222-small.jpg" alt="Photo d'un cockpit de F-14A">
-        <div class="gallery-caption">Photo d'un cockpit de F-14A</div>
-      </div>
-      
-      <div class="gallery-item" data-caption="Prototype F-14A Tomcat pendant des essais d'armes en 1973">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/F-14A_Tomcat_prototype_during_armament_tests_c1973.JPEG/500px-F-14A_Tomcat_prototype_during_armament_tests_c1973.JPEG" alt="Prototype F-14A Tomcat pendant des essais d'armes en 1973">
-        <div class="gallery-caption">Prototype F-14A Tomcat pendant des essais d'armes en 1973</div>
-      </div>
-      
-      <div class="gallery-item" data-caption="11e prototype du F-14A Tomcat n°157990">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Grumman_F-14A_Tomcat_US_Navy_157990_VF-1_%287006423066%29.jpg/500px-Grumman_F-14A_Tomcat_US_Navy_157990_VF-1_%287006423066%29.jpg" alt="11e prototype du F-14A Tomcat n°157990">
-        <div class="gallery-caption">11e prototype du F-14A Tomcat n°157990</div>
-      </div>
-      
-      <div class="gallery-item" data-caption="F-14A décoré du drapeau pirate de l'escadron VF-84 « Jolly Rogers », années 1980.">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Grumman_F-14A_Tomcat_of_VF-84_in_flight%2C_circa_in_1978.jpg/500px-Grumman_F-14A_Tomcat_of_VF-84_in_flight%2C_circa_in_1978.jpg" alt="F-14A décoré du drapeau pirate de l'escadron VF-84 « Jolly Rogers », années 1980.">
-        <div class="gallery-caption">F-14A décoré du drapeau pirate de l'escadron VF-84 « Jolly Rogers », années 1980.</div>
-      </div>
-    </div>
-  </div>
-  </template>
-  <template id="article-Raid sur la Lybie">
-    <div class="preview-resume">
-     En avril 1986, après l’attentat de Berlin-Ouest attribué formellement à la Libye grâce à l’interception de messages secrets, les États-Unis décident de frapper le régime de Kadhafi. Malgré le refus de la majorité des pays européens de les soutenir, les Américains obtiennent l’accord du Royaume-Uni, qui met à disposition des bases aériennes essentielles.
-     L’opération « El Dorado Canyon » mobilise de nombreux avions militaires américains et se déroule dans la nuit du 14 au 15 avril 1986. Les villes de Tripoli et Benghazi sont bombardées de manière simultanée. Les Américains détruisent plusieurs objectifs stratégiques mais perdent un avion. Cette opération représente une démonstration de force destinée à répondre au terrorisme soutenu par un État.
-    </div>
-    
-    <h2 class="preview-theme">Thème I – Un attentat qui déclenche la riposte américaine</h2>
-    
-    <h3 class="preview-section-title">A. L’explosion de Berlin-Ouest et les preuves contre la Libye</h3>
-    <p class="preview-text">
-     En avril 1986, une bombe explose dans une discothèque de Berlin-Ouest fréquentée par des soldats américains. L’attentat tue un militaire américain et une jeune femme turque. Rapidement, les services de renseignement américains interceptent et déchiffrent des messages venus directement de Tripoli, prouvant que le gouvernement libyen est impliqué. Ces échanges incluent même des félicitations envoyées depuis la Libye à ses agents pour la réussite de l’opération.
-    </p>
-      <h3 class="preview-section-title">B. Montée des tensions entre Reagan et Kadhafi et préparation de la réponse</h3>
-    <p class="preview-text">
-      L'administration américaine cherche une riposte rapide mais précise, tout en limitant les pertes humaines. Reagan hausse le ton et qualifie Kadhafi de « chien malade du Moyen-Orient ». Les chefs militaires américains préparent alors une frappe aérienne surprise impliquant principalement la VIᵉ flotte en Méditerranée. Une liste de cibles militaires est dressée : bases, sites de missiles, camps terroristes et infrastructures pétrolières.
-    </p>
-    <h2 class="preview-theme">Thème II – Le contexte diplomatique et l’accord britannique décisif</h2>
-    <h3 class="preview-section-title">A. L’isolement américain face à l’Europe hésitante</h3>
-    <p class="preview-text">
-      Alors que Washington cherche le soutien de ses alliés, la plupart des pays européens refusent de s’engager :
 
-la France et l’Espagne interdisent le survol de leurs territoires ;
-
-l’Allemagne nie même l’implication libyenne ;
-
-plusieurs gouvernements craignent de perdre leurs relations commerciales avec Tripoli.
-
-Face à ces refus, l’option militaire devient la seule solution envisageable.
-    </p>   
-    <h3 class="preview-section-title">B. L’appui crucial de Margaret Thatcher et les moyens mis à disposition</h3>
-    <p class="preview-text">
-     Le Royaume-Uni, informé des messages libyens interceptés par ses propres services, décide de soutenir les États-Unis malgré une opinion publique hostile. Thatcher autorise l’usage des bases britanniques, notamment pour les avions F-111, capables de frapper Tripoli avec précision grâce à leurs systèmes de guidage laser. Grâce à ce feu vert, l’opération américaine prend une ampleur beaucoup plus large et plus efficace.
-    </p>
-       <h2 class="preview-theme">Thème III – Le déroulement de l’opération « El Dorado Canyon »</h2>
-    
-    <h3 class="preview-section-title">A. Une mobilisation aérienne massive et secrète</h3>
-    <p class="preview-text">
-    De nombreux avions-ravitailleurs, appareils de reconnaissance et chasseurs-bombardiers sont positionnés en Grande-Bretagne. Les préparatifs sont camouflés sous prétexte d’exercices militaires.
-    Le 14 avril au soir, les ravitailleurs décollent, suivis par les F-111 chargés de bombes guidées. En raison du refus français et espagnol, les avions doivent contourner l’Europe par l’Atlantique, rallonger leur trajet et multiplier les ravitaillements en vol.
-    Pendant ce temps, deux porte-avions américains déjà positionnés au large de la Libye (USS America et USS Coral Sea) préparent leurs propres frappes sur Benghazi.
-    </p>   
-    <h3 class="preview-section-title">B. L’attaque coordonnée contre Tripoli et Benghazi</h3>
-    <p class="preview-text">
- Dans la nuit du 14 au 15 avril, l’attaque commence.
-
-Les avions de l’US Navy détruisent des radars et défenses antiaériennes à Benghazi.
-
-Les F-111 de l’US Air Force frappent Tripoli en volant très bas pour éviter les radars.
-Les objectifs sont :
-
-les casernes de Bab al-Aziziya (où se trouve Kadhafi),
-
-la base navale de Sidi Bilal,
-
-l’aéroport militaire de Tripoli.
-
-Malgré la défense libyenne, peu efficace, un F-111 américain est perdu en mer avec son équipage. Les bombardements causent également des dommages involontaires sur des zones civiles.
-    </p>  
-    <h2 class="preview-conclusion-title">Conclusion</h2>
-    <p class="preview-conclusion-text">
-    L’opération El Dorado Canyon illustre la manière dont un attentat terroriste peut déclencher une réaction militaire rapide et massive d’un État puissant. Le raid montre aussi les tensions entre alliés ainsi que le rôle central du Royaume-Uni dans la réussite de l’opération. Enfin, cette attaque aérienne marque un tournant dans la confrontation entre les États-Unis et la Libye, tout en soulignant les limites d’une riposte militaire menée dans un contexte diplomatique très divisé.
-    </p>
-     <!-- ========================================
-       GALERIE D'IMAGES
-       ======================================== -->
-  <div class="article-gallery">
-    <h3>📸 Galerie photos</h3>
-    
-    <div class="gallery-grid">
-      <div class="gallery-item" data-caption="Un bombardier stratégique F-111F de la 48th Tactical Fighter Wing décolle pour prendre part au bombardement de la Libye.">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/USF-111_Libya1986.JPG/500px-USF-111_Libya1986.JPG" alt="Un bombardier stratégique F-111F de la 48th Tactical Fighter Wing décolle pour prendre part au bombardement de la Libye.">
-        <div class="gallery-caption">Un bombardier stratégique F-111F de la 48th Tactical Fighter Wing décolle pour prendre part au bombardement de la Libye.</div>
+    <!-- Section Articles Récents -->
+    <section class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Articles Récents</h2>
+        <button class="view-all-btn">Voir tout →</button>
       </div>
       
-      <div class="gallery-item" data-caption="Le président des États-Unis Ronald Reagan consulte des membres du Congrès des États-Unis la veille de l'attaque.">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Meeting_with_Bipartisan_Congressman_on_U.S._Air_Strike_Against_Libya.jpg/500px-Meeting_with_Bipartisan_Congressman_on_U.S._Air_Strike_Against_Libya.jpg" alt="Le président des États-Unis Ronald Reagan consulte des membres du Congrès des États-Unis la veille de l'attaque.">
-        <div class="gallery-caption">Le président des États-Unis Ronald Reagan consulte des membres du Congrès des États-Unis la veille de l'attaque.</div>
+      <div class="grid-modern">
+        <!-- Article 1 -->
+        <article class="card-modern">
+          <span class="card-category">Aviation civile</span>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/South_African_Airlink_Boeing_737-200_Advanced_Smith.jpg/500px-South_African_Airlink_Boeing_737-200_Advanced_Smith.jpg" alt="Boeing 737" class="card-image">
+          <div class="card-body">
+            <h3 class="card-title">Boeing 737 : le cap des 3000</h3>
+            <p class="card-excerpt">Le Boeing 737 naît en 1964 alors que Boeing cherche à occuper le marché des court-courriers dominé par le DC-9...</p>
+            <div class="card-meta">
+              <span>📅 18 nov. 2025</span>
+              <span>⏱️ 8 min</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Article 2 -->
+        <article class="card-modern">
+          <span class="card-category">Grands avions</span>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/US_Navy_051105-F-5480T-005_An_F-14D_Tomcat_conducts_a_mission_over_the_Persian_Gulf-region.jpg/500px-US_Navy_051105-F-5480T-005_An_F-14D_Tomcat_conducts_a_mission_over_the_Persian_Gulf-region.jpg" alt="F-14 Tomcat" class="card-image">
+          <div class="card-body">
+            <h3 class="card-title">Tomcat, félin des mers</h3>
+            <p class="card-excerpt">Le F-14 Tomcat occupe une place unique dans l'histoire de l'aviation militaire. Conçu par Grumman...</p>
+            <div class="card-meta">
+              <span>📅 15 nov. 2025</span>
+              <span>⏱️ 12 min</span>
+            </div>
+            </a>
+          </div>
+        </article>
+
+        <!-- Article 3 -->
+        <article class="card-modern">
+          <span class="card-category">Opérations militaires</span>
+          <img src="https://defense.info/wp-content/uploads/2020/01/ss1-1024x675-1.jpg" alt="Raid Libye" class="card-image">
+          <div class="card-body">
+            <h3 class="card-title">Raid sur la Libye</h3>
+            <p class="card-excerpt">En avril 1986, après l'attentat de Berlin-Ouest attribué à la Libye, les États-Unis décident de frapper...</p>
+            <div class="card-meta">
+              <span>📅 15 nov. 2025</span>
+              <span>⏱️ 10 min</span>
+            </div>
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section Multimédia -->
+    <section class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Contenus Multimédias</h2>
+        <button class="view-all-btn">Voir tout →</button>
       </div>
       
-      <div class="gallery-item" data-caption="Le personnel au sol de la RAF Lakenheath prépare un F-111F du 48th Tactical Fighter Wing pour une attaque aérienne contre la Libye.">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/F-111F_GBU-10_bound_for_Libya.jpg/500px-F-111F_GBU-10_bound_for_Libya.jpg" alt="Le personnel au sol de la RAF Lakenheath prépare un F-111F du 48th Tactical Fighter Wing pour une attaque aérienne contre la Libye.">
-        <div class="gallery-caption">Le personnel au sol de la RAF Lakenheath prépare un F-111F du 48th Tactical Fighter Wing pour une attaque aérienne contre la Libye.</div>
+      <div class="grid-modern">
+        <div class="card-modern">
+          <img src="https://i.ytimg.com/vi/uH7v_2dCTv0/maxresdefault.jpg" alt="Vidéo" class="card-image">
+          <div class="card-body">
+            <h3 class="card-title">🎥 Nos vidéos</h3>
+            <p class="card-excerpt">Découvrez notre sélection de vidéos sur l'aviation</p>
+            <a href="Page n°3" class="card-action">Explorer →</a>
+          </div>
+        </div>
+
+        <div class="card-modern">
+          <img src="https://i.scdn.co/image/ab6765630000ba8a8b2e7a6e9a4e8f5c3d1a0b2c" alt="Podcast" class="card-image">
+          <div class="card-body">
+            <h3 class="card-title">🎙️ Podcasts</h3>
+            <p class="card-excerpt">Écoutez nos podcasts dédiés à l'aéronautique</p>
+            <a href="Page n°4" class="card-action">Écouter →</a>
+          </div>
+        </div>
+
+        <div class="card-modern">
+          <img src="https://www.geo-fs.com/images/media/10.jpg" alt="Jeux" class="card-image">
+          <div class="card-body">
+            <h3 class="card-title">🎮 Simulateur</h3>
+            <p class="card-excerpt">Pilotez des avions dans notre simulateur en ligne</p>
+            <a href="Page n°5" class="card-action">Jouer →</a>
+          </div>
+        </div>
       </div>
-      
-      <div class="gallery-item" data-caption="Des avions de combat se préparant à décoller de USS America (CV-66) au cours de l'opération.">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Aircraft_on_USS_America_%28CV-66%29_during_attacks_on_Libya_1986.jpeg/500px-Aircraft_on_USS_America_%28CV-66%29_during_attacks_on_Libya_1986.jpeg" alt="Des avions de combat se préparant à décoller de USS America (CV-66) au cours de l'opération.">
-        <div class="gallery-caption">Des avions de combat se préparant à décoller de USS America (CV-66) au cours de l'opération.</div>
-      </div>
- </div>
-  </div>
-  </template>
+    </section>
+
   </main>
 
   <!-- Script pour le thème et le menu -->
@@ -953,6 +877,51 @@ if (searchInput && articles.length > 0) {
       sendBtn.click();
     }
   });
+      // ========================================
+    // SYSTÈME DE TUTORIEL
+    // ========================================
+    let currentTutorialStep = 1;
+
+    function nextTutorialStep() {
+      if (currentTutorialStep < 3) {
+        document.querySelector(`[data-step="${currentTutorialStep}"]`).classList.remove('active');
+        currentTutorialStep++;
+        document.querySelector(`[data-step="${currentTutorialStep}"]`).classList.add('active');
+      }
+    }
+
+    function prevTutorialStep() {
+      if (currentTutorialStep > 1) {
+        document.querySelector(`[data-step="${currentTutorialStep}"]`).classList.remove('active');
+        currentTutorialStep--;
+        document.querySelector(`[data-step="${currentTutorialStep}"]`).classList.add('active');
+      }
+    }
+
+    function skipTutorial() {
+      document.getElementById('tutorial-overlay').classList.add('hidden');
+      localStorage.setItem('tutorialCompleted', 'true');
+    }
+
+    function finishTutorial() {
+      skipTutorial();
+    }
+
+    function showTutorial() {
+      document.getElementById('tutorial-overlay').classList.remove('hidden');
+      currentTutorialStep = 1;
+      document.querySelectorAll('.tutorial-step').forEach(step => step.classList.remove('active'));
+      document.querySelector('[data-step="1"]').classList.add('active');
+    }
+
+    // Afficher le tutoriel uniquement à la première visite
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!localStorage.getItem('tutorialCompleted')) {
+        // Le tutoriel s'affiche automatiquement
+      } else {
+        document.getElementById('tutorial-overlay').classList.add('hidden');
+      }
+    });
 </script>
 <!-- Fenêtre Newsletter -->
 <div id="newsletter-modal">
