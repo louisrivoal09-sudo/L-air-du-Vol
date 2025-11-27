@@ -355,50 +355,71 @@
   </div>
 </div>
   <script>    
-  const aiBtn = document.getElementById("ai-chat-btn");
-  const aiModal = document.getElementById("ai-chat-modal");
-  const closeAiBtn = document.getElementById("close-ai-chat");
-  const aiMessages = document.getElementById("ai-chat-messages");
-  const aiInput = document.getElementById("ai-input");
-  const sendBtn = document.getElementById("ai-send-btn");
-  const typingIndicator = document.getElementById("typing-indicator");
+ const aiBtn = document.getElementById("ai-chat-btn");
+const aiModal = document.getElementById("ai-chat-modal");
+const aiClose = document.getElementById("close-ai-chat");
+const aiMessages = document.querySelector(".ai-chat-messages");
+const aiInput = document.getElementById("ai-input");
+const aiSend = document.getElementById("ai-send-btn");
 
-  aiBtn.addEventListener("click", () => aiModal.classList.toggle("show"));
-  closeAiBtn.addEventListener("click", () => aiModal.classList.remove("show"));
+// OUVERTURE / FERMETURE DU CHAT
+aiBtn.addEventListener("click", () => aiModal.classList.add("show"));
+aiClose.addEventListener("click", () => aiModal.classList.remove("show"));
 
-  function addMessage(text, fromUser = false) {
-    const msg = document.createElement("div");
-    msg.textContent = text;
-    msg.className = `ai-message ${fromUser ? "user" : "ai"}`;
-    aiMessages.appendChild(msg);
-    aiMessages.scrollTop = aiMessages.scrollHeight;
+// ENVOI D'UN MESSAGE
+aiSend.addEventListener("click", sendMessage);
+aiInput.addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
   }
+});
 
-  async function sendMessageToAI(userText) {
-    typingIndicator.classList.add("show");
-    try {
-      const res = await fetch("http://localhost:3000/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userText })
-      });
-      const data = await res.json();
-      typingIndicator.classList.remove("show");
-      addMessage(data.reply);
-    } catch {
-      typingIndicator.classList.remove("show");
-      addMessage("⚠️ Erreur de connexion avec l'IA.");
-    }
-  }
+async function sendMessage() {
+  const text = aiInput.value.trim();
+  if (!text) return;
 
-  sendBtn.addEventListener("click", () => {
-    const text = aiInput.value.trim();
-    if (text) {
-      addMessage(text, true);
-      aiInput.value = "";
-      sendMessageToAI(text);
-    }
+  // Ajouter message utilisateur
+  addMessage(text, "user");
+  aiInput.value = "";
+  aiSend.disabled = true;
+
+  // Indicateur de chargement
+  const loading = addMessage("• • •", "ai");
+  loading.classList.add("typing-indicator");
+
+  // APPEL API IA
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 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"
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: text }]
+    })
   });
+
+  const data = await response.json();
+
+  // Supprimer l'indicateur
+  loading.remove();
+
+  // Afficher réponse IA
+  addMessage(data.choices[0].message.content, "ai");
+  aiSend.disabled = false;
+}
+
+// AJOUTER UN MESSAGE DANS L’UI
+function addMessage(content, sender) {
+  const div = document.createElement("div");
+  div.className = "ai-message " + sender;
+  div.textContent = content;
+  aiMessages.appendChild(div);
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+  return div;
+}
 
   aiInput.addEventListener("keypress", e => {
     if (e.key === "Enter" && !e.shiftKey) {
