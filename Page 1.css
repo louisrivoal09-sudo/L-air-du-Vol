@@ -6115,4 +6115,90 @@ body.dark .gallery-item {
         font-size: 1.5rem;
       }
     }
-    
+    /* Sidebar réduite */
+.sidebar.collapsed {
+  width: 80px;
+}
+
+/* Le texte se cache dans le mode réduit */
+.sidebar.collapsed .menu a {
+  justify-content: center;
+  padding: 0.875rem;
+}
+
+.sidebar.collapsed .menu a span {
+  display: none;
+}
+
+.sidebar.collapsed .menu a::after {
+  display: none;
+}
+
+/* Icônes en mode réduit */
+.sidebar .menu a .icon {
+  margin-right: 12px;
+  font-size: 1.3rem;
+}
+
+.sidebar.collapsed .menu a .icon {
+  margin: 0;
+}
+/* ---- Mode réduit de la sidebar ---- */
+.sidebar.collapsed {
+  width: 80px !important;
+}
+
+/* cacher les labels */
+.sidebar.collapsed .label {
+  display: none;
+}
+
+/* Centrer les icônes dans le mode réduit */
+.sidebar.collapsed .menu a {
+  justify-content: center;
+}
+
+/* éviter l'espacement */
+.sidebar.collapsed .menu a .icon {
+  margin: 0;
+}
+
+/* Dans le mode normal : icône + texte */
+.menu a .icon {
+  margin-right: 12px;
+  font-size: 1.3rem;
+}
+/* --- SIDEBAR COLLAPSÉE (icônes visibles) --- */
+.sidebar.collapsed {
+  width: 80px !important;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+/* cacher seulement le texte */
+.sidebar.collapsed .label {
+  display: none !important;
+}
+
+/* afficher et centrer les icônes */
+.sidebar.collapsed .icon {
+  font-size: 1.7rem !important;
+  margin: 0 !important;
+}
+
+/* centrer le lien */
+.sidebar.collapsed .menu a {
+  justify-content: center !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* sous-menu masqué en mode réduit */
+.sidebar.collapsed .sous-menu {
+  display: none !important;
+}
+
+/* corriger les flèches ▼ des sous-menus */
+.sidebar.collapsed .has-submenu > a::after {
+  display: none !important;
+}

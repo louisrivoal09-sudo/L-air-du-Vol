@@ -537,18 +537,17 @@
       </li>
     </ul>
     <!-- Publicité sidebar   -->
- <!-- Publicité sidebar   -->
 <div class="sidebar-ad">
   <p>PUBLICITÉ</p>
-  <a href="https://www.flightsimulator.com/" target="_blank">
-    <img src="https://image.api.playstation.com/vulcan/ap/rnd/202509/1802/ed39778b97eafec593e5eea9cd762fab81976920c3e92720.jpg" alt="Pub microsoft flight simulator 2024">
+  <a href="https://www.picard.fr" target="_blank">
+    <img src="https://www.picard.fr/on/demandware.static/-/Sites-picard-Library/default/dw53e8a5b3/brandcontent/1464x270px_BANNIERE_HEADER_SNACK_MOBILE.jpg" alt="Picard">
   </a>
 </div>
 
 <div class="sidebar-ad">
   <p>PUBLICITÉ</p>
-  <a href="https://www.avionslegendaires.net/encyclopedie/" target="_blank">
-    <img src="https://www.avionslegendaires.net/wp-content/uploads/2023/05/logo-avionslegendaires-V9-couleur.png" alt="Site avion">
+  <a href="https://www.apple.com" target="_blank">
+    <img src="https://www.vivelapub.fr/wp-content/uploads/miniatures/apple3.jpg" alt="Apple">
   </a>
 </div>
   </nav>
@@ -656,10 +655,10 @@
 
       <!-- Publicité -->
       <div class="ad-card">
-        <img src="https://image.api.playstation.com/vulcan/ap/rnd/202509/1802/ed39778b97eafec593e5eea9cd762fab81976920c3e92720.jpg" alt="Pub microsoft flight">
-        <h3>Microsoft Flight Simulator 2024</h3>
-        <p>Le meilleur simulateur d'avions du monde 🌏🛬</p>
-        <a href="https://www.flightsimulator.com/" target="_blank" class="btn">Découvrir</a>
+        <img src="https://www.picard.fr/on/demandware.static/-/Sites-picard-Library/default/dw53e8a5b3/brandcontent/1464x270px_BANNIERE_HEADER_SNACK_MOBILE.jpg" alt="Pub Picard">
+        <h3>🍕 Découvrez les nouveaux snacks Picard</h3>
+        <p>Livraison gratuite dès 60€ d'achat</p>
+        <a href="https://www.picard.fr" target="_blank" class="btn">Découvrir</a>
       </div>
 
       <!-- Ajoutez d'autres articles ici selon vos besoins -->
@@ -945,78 +944,7 @@ Malgré la défense libyenne, peu efficace, un F-111 américain est perdu en mer
    - Partage (Web Share + fallback)
    - Animations, observers, raccourcis clavier
    ===================================================== */
-const aiBtn = document.getElementById("ai-chat-btn");
-const aiModal = document.getElementById("ai-chat-modal");
-const aiClose = document.getElementById("close-ai-chat");
-const aiMessages = document.querySelector(".ai-chat-messages");
-const aiInput = document.getElementById("ai-input");
-const aiSend = document.getElementById("ai-send-btn");
 
-// OUVERTURE / FERMETURE DU CHAT
-aiBtn.addEventListener("click", () => aiModal.classList.add("show"));
-aiClose.addEventListener("click", () => aiModal.classList.remove("show"));
-
-// ENVOI D'UN MESSAGE
-aiSend.addEventListener("click", sendMessage);
-aiInput.addEventListener("keydown", e => {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
-});
-
-async function sendMessage() {
-  const text = aiInput.value.trim();
-  if (!text) return;
-
-  // Ajouter message utilisateur
-  addMessage(text, "user");
-  aiInput.value = "";
-  aiSend.disabled = true;
-
-  // Indicateur de chargement
-  const loading = addMessage("• • •", "ai");
-  loading.classList.add("typing-indicator");
-
-  // APPEL API IA
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer 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"
-    },
-    body: JSON.stringify({
-      model: "gpt-4o-mini",
-      messages: [{ role: "user", content: text }]
-    })
-  });
-
-  const data = await response.json();
-
-  // Supprimer l'indicateur
-  loading.remove();
-
-  // Afficher réponse IA
-  addMessage(data.choices[0].message.content, "ai");
-  aiSend.disabled = false;
-}
-
-// AJOUTER UN MESSAGE DANS L’UI
-function addMessage(content, sender) {
-  const div = document.createElement("div");
-  div.className = "ai-message " + sender;
-  div.textContent = content;
-  aiMessages.appendChild(div);
-  aiMessages.scrollTop = aiMessages.scrollHeight;
-  return div;
-}
-
-  aiInput.addEventListener("keypress", e => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendBtn.click();
-    }
-  });
 (function () {
   'use strict';
 
@@ -1740,23 +1668,4 @@ function addMessage(content, sender) {
 
   </script>
 </body>
-<footer> <!-- Bouton flottant -->
-<button id="ai-chat-btn">❔</button>
-
-<!-- Fenêtre de chat -->
-<div id="ai-chat-modal">
-  <div class="ai-chat-header">
-    <h3>Assistant IA</h3>
-    <button id="close-ai-chat">&times;</button>
-  </div>
-  <div class="ai-chat-messages" id="ai-chat-messages"></div>
-  <div class="typing-indicator" id="typing-indicator">
-    <div class="typing-dots"><span></span><span></span><span></span></div>
-  </div>
-  <div class="ai-chat-input">
-    <textarea id="ai-input" placeholder="Écrivez votre message..."></textarea>
-    <button id="ai-send-btn">Envoyer</button>
-  </div>
-</div>
-</footer>
 </html>
